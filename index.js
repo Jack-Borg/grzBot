@@ -12,6 +12,7 @@ Object.keys(botCommands).map((key) => {
 });
 
 const TOKEN = process.env.TOKEN;
+requestRepo.createTable();
 
 bot.login(TOKEN);
 

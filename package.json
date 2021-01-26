@@ -4,8 +4,7 @@
 	"description": "Discord bot for SitePoint",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js",
-		"initDB": "node initDB.js"
+		"start": "node index.js"
 	},
 	"author": "Michiel Mulders",
 	"license": "ISC",
