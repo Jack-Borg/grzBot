@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"init": "node initDB.js"
+		"initDB": "node initDB.js"
 	},
 	"author": "Michiel Mulders",
 	"license": "ISC",
