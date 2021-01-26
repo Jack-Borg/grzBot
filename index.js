@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const clanRequest = require('../clanRequest');
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 const AppDAO = require('./dao');
