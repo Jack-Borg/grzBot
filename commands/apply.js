@@ -5,8 +5,10 @@ module.exports = {
 	name: 'grz.apply',
 	description: 'Apply for clan',
 	execute(msg, args, dao, bot) {
-		if (msg.member.roles.cache.has('801445893210636299'))
+		if (msg.member.roles.cache.has('729731553663647826'))
 			return msg.reply('You are already in GRZ');
+
+		if (msg.channel.name !== '〔👑〕clan-recruitment') return;
 
 		const reqRepo = new clanReq(dao);
 

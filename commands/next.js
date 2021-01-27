@@ -6,6 +6,8 @@ module.exports = {
 	name: 'grz.next',
 	description: 'next 5 applications',
 	execute(msg, args, dao) {
+		if (!msg.member.roles.cache.has('767034530057945109')) return;
+
 		const reqRepo = new clanReq(dao);
 		reqRepo.getNext().then(
 			(val) => {

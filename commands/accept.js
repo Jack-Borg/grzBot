@@ -7,7 +7,7 @@ module.exports = {
 	execute(msg, args, dao, bot) {
 		if (
 			msg.channel.name !== '》recruitment-outcome' &&
-			!msg.member.roles.cache.has('802505344668532746')
+			!msg.member.roles.cache.has('767034530057945109')
 		)
 			return; // check for tester role and channel
 
