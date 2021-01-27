@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const clanReq = require('../clanRequest');
@@ -6,7 +7,7 @@ module.exports = {
 	name: 'grz.next',
 	description: 'next 5 applications',
 	execute(msg, args, dao) {
-		if (!msg.member.roles.cache.has('767034530057945109')) return;
+		if (!msg.member.roles.cache.has(env.process.TESTERROLE)) return;
 
 		const reqRepo = new clanReq(dao);
 		reqRepo.getNext().then(

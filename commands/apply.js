@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require('discord.js');
 const clanReq = require('../clanRequest');
 
@@ -5,10 +6,10 @@ module.exports = {
 	name: 'grz.apply',
 	description: 'Apply for clan',
 	execute(msg, args, dao, bot) {
-		if (msg.member.roles.cache.has('729731553663647826'))
+		if (msg.member.roles.cache.has(env.process.MEMBERROLE))
 			return msg.reply('You are already in GRZ');
 
-		if (msg.channel.name !== '〔👑〕clan-recruitment') return;
+		if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
 
 		const reqRepo = new clanReq(dao);
 

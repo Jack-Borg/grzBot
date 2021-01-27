@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require('discord.js');
 const clanReq = require('../clanRequest');
 
@@ -6,8 +7,8 @@ module.exports = {
 	description: 'Decline clan application',
 	execute(msg, args, dao, bot) {
 		if (
-			msg.channel.name !== '》recruitment-outcome' &&
-			!msg.member.roles.cache.has('767034530057945109')
+			msg.channel.name !== env.process.OUTCOMECHANNEL &&
+			!msg.member.roles.cache.has(env.process.TESTERROLE)
 		)
 			return; // check for tester role and channel
 

@@ -5,5 +5,6 @@
 // const obj = Object.fromEntries(arr);
 
 // console.log(obj);
+require('dotenv').config();
 
-console.log('a' > 1);
+console.log(process.env.APPLICATIONCHANNEL);

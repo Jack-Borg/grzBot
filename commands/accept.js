@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require('discord.js');
 const clanReq = require('../clanRequest');
 
@@ -6,8 +7,8 @@ module.exports = {
 	description: 'Accept clan application',
 	execute(msg, args, dao, bot) {
 		if (
-			msg.channel.name !== '》recruitment-outcome' &&
-			!msg.member.roles.cache.has('767034530057945109')
+			msg.channel.name !== env.process.OUTCOMECHANNEL &&
+			!msg.member.roles.cache.has(env.process.TESTERROLE)
 		)
 			return; // check for tester role and channel
 
@@ -15,7 +16,7 @@ module.exports = {
 
 		const user = msg.mentions.users.first();
 		const id = user.id;
-		const mRole = msg.guild.roles.cache.find((r) => r.name == 'member');
+		const mRole = msg.guild.roles.cache.find((r) => r.name == 'Member');
 		// console.log(msg.member.roles.cache.has('802505344668532746'));
 
 		reqRepo.getById(id).then((applicant) => {
@@ -36,7 +37,7 @@ module.exports = {
 
 				msg.guild.members.cache
 					// .find((u) => u.user.id == '134785189128830977')
-					.find((u) => u.user.id == '703517426452660304')
+					.find((u) => u.user.id == env.process.LEADERID)
 					.send(
 						new Discord.MessageEmbed()
 							.setTitle('New clan member accepted')
