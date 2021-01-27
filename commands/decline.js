@@ -7,8 +7,8 @@ module.exports = {
 	description: 'Decline clan application',
 	execute(msg, args, dao, bot) {
 		if (
-			msg.channel.name !== env.process.OUTCOMECHANNEL &&
-			!msg.member.roles.cache.has(env.process.TESTERROLE)
+			msg.channel.name !== process.env.OUTCOMECHANNEL &&
+			!msg.member.roles.cache.has(process.env.TESTERROLE)
 		)
 			return; // check for tester role and channel
 

@@ -6,7 +6,7 @@ module.exports = {
 	name: 'grz.apply',
 	description: 'Apply for clan',
 	execute(msg, args, dao, bot) {
-		if (msg.member.roles.cache.has(env.process.MEMBERROLE))
+		if (msg.member.roles.cache.has(process.env.MEMBERROLE))
 			return msg.reply('You are already in GRZ');
 
 		if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
@@ -52,11 +52,13 @@ module.exports = {
 				appRequest.nukes
 			)
 		)
-			return msg.channel.send(new Discord.MessageEmbed()
-				.setTitle('Invalid argument')
-				.setDescription(
-					'grz.apply ign:<IGN> lvl:<LVL> kdr:<KDR> kpg:<KPG> nukes:<NUKES>\nUse **.** for decimal point **AND** no spaces around **:**'
-				));
+			return msg.channel.send(
+				new Discord.MessageEmbed()
+					.setTitle('Invalid argument')
+					.setDescription(
+						'grz.apply ign:<IGN> lvl:<LVL> kdr:<KDR> kpg:<KPG> nukes:<NUKES>\nUse **.** for decimal point **AND** no spaces around **:**'
+					)
+			);
 
 		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.reply('not high enough lvl');
 		else if (appRequest.kdr < 2.5 || isNaN(appRequest.kdr))
