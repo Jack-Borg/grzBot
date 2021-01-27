@@ -15,7 +15,7 @@ module.exports = {
 
 		const user = msg.mentions.users.first();
 		const id = user.id;
-		const mRole = msg.guild.roles.cache.find((r) => r.name == 'member');
+		const mRole = msg.guild.roles.cache.find((r) => r.name == 'Member');
 		// console.log(msg.member.roles.cache.has('802505344668532746'));
 
 		reqRepo.getById(id).then((applicant) => {
