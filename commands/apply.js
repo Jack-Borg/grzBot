@@ -52,7 +52,11 @@ module.exports = {
 				appRequest.nukes
 			)
 		)
-			return msg.reply('missing argument');
+			return msg.channel.send(new Discord.MessageEmbed()
+				.setTitle('Invalid argument')
+				.setDescription(
+					'grz.apply ign:<IGN> lvl:<LVL> kdr:<KDR> kpg:<KPG> nukes:<NUKES>\nUse **.** for decimal point **AND** no spaces around **:**'
+				));
 
 		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.reply('not high enough lvl');
 		else if (appRequest.kdr < 2.5 || isNaN(appRequest.kdr))
