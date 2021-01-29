@@ -9,8 +9,8 @@ module.exports = {
 		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
 			return msg.reply('You are already in GRZ');
 		}
-      console.log(process.env.APPLICATIONCHANNEL);
-		if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
+
+		if (msg.channel.id !== process.env.APPLICATIONCHANNEL) return;
 
 		const reqRepo = new clanReq(dao);
 
