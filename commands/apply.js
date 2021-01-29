@@ -6,10 +6,11 @@ module.exports = {
 	name: 'grz.apply',
 	description: 'Apply for clan',
 	execute(msg, args, dao, bot) {
-		if (msg.member.roles.cache.has(process.env.MEMBERROLE))
+		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
 			return msg.reply('You are already in GRZ');
+		}
 
-		if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
+		// if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
 
 		const reqRepo = new clanReq(dao);
 
@@ -42,7 +43,6 @@ module.exports = {
 		});
 
 		console.log(appRequest);
-
 		if (
 			!(
 				appRequest.ign &&
@@ -67,6 +67,11 @@ module.exports = {
 			return msg.reply('not high enough KPG');
 		else if (appRequest.nukes < 25 || isNaN(appRequest.nukes))
 			return msg.reply('not enough Nukes');
+
+		//804144673765457940 approved testing role
+		const toTestRole = msg.guild.roles.cache.find((r) => r.id == process.env.TOTESTROLE);
+
+		msg.member.roles.add(toTestRole);
 
 		const embed = new Discord.MessageEmbed().setTitle(
 			':white_check_mark: application accepted'
