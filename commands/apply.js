@@ -9,7 +9,7 @@ module.exports = {
 		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
 			return msg.reply('You are already in GRZ');
 		}
-
+      console.log(process.env.APPLICATIONCHANNEL);
 		if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
 
 		const reqRepo = new clanReq(dao);
@@ -68,9 +68,7 @@ module.exports = {
 		else if (appRequest.nukes < 25 || isNaN(appRequest.nukes))
 			return msg.reply('not enough Nukes');
 
-		//804144673765457940 approved testing role
 		const toTestRole = msg.guild.roles.cache.find((r) => r.id == process.env.TOTESTROLE);
-
 		msg.member.roles.add(toTestRole);
 
 		const embed = new Discord.MessageEmbed().setTitle(
