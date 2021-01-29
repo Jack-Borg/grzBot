@@ -10,7 +10,7 @@ module.exports = {
 			return msg.reply('You are already in GRZ');
 		}
 
-		// if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
+		if (msg.channel.name !== process.env.APPLICATIONCHANNEL) return;
 
 		const reqRepo = new clanReq(dao);
 
