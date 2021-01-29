@@ -61,11 +61,11 @@ module.exports = {
 			);
 
 		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.reply('not high enough lvl');
-		else if (appRequest.kdr < 2.5 || isNaN(appRequest.kdr))
+		else if (appRequest.kdr < 2.95 || isNaN(appRequest.kdr))
 			return msg.reply('not high enough KDR');
 		else if (appRequest.kpg < 15 || isNaN(appRequest.kpg))
 			return msg.reply('not high enough KPG');
-		else if (appRequest.nukes < 25 || isNaN(appRequest.nukes))
+		else if (appRequest.nukes < 50 || isNaN(appRequest.nukes))
 			return msg.reply('not enough Nukes');
 
 		const toTestRole = msg.guild.roles.cache.find((r) => r.id == process.env.TOTESTROLE);
