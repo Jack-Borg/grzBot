@@ -7,8 +7,8 @@ module.exports = {
 	description: 'Accept clan application',
 	execute(msg, args, dao, bot) {
 		if (
-			msg.channel.name !== env.process.OUTCOMECHANNEL &&
-			!msg.member.roles.cache.has(env.process.TESTERROLE)
+			msg.channel.name !== process.env.OUTCOMECHANNEL &&
+			!msg.member.roles.cache.has(process.env.TESTERROLE)
 		)
 			return; // check for tester role and channel
 
@@ -37,7 +37,7 @@ module.exports = {
 
 				msg.guild.members.cache
 					// .find((u) => u.user.id == '134785189128830977')
-					.find((u) => u.user.id == env.process.LEADERID)
+					.find((u) => u.user.id == process.env.LEADERID)
 					.send(
 						new Discord.MessageEmbed()
 							.setTitle('New clan member accepted')

@@ -7,7 +7,7 @@ module.exports = {
 	name: 'grz.next',
 	description: 'next 5 applications',
 	execute(msg, args, dao) {
-		if (!msg.member.roles.cache.has(env.process.TESTERROLE)) return;
+		if (!msg.member.roles.cache.has(process.env.TESTERROLE)) return;
 
 		const reqRepo = new clanReq(dao);
 		reqRepo.getNext().then(
