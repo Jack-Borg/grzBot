@@ -61,10 +61,10 @@ module.exports = {
 			);
 
 		const currReq = new Discord.MessageEmbed().setTitle('GrZ Requirements:').setDescription(`
-            Level: 30
-            KDR: 3
+            Level: 40
+            KDR: 3 ( 2.5 if your level is above 50)
             KPG: 15
-            Nukes: 50
+            Nukes: 25
         `);
 
 		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.channel.send(currReq);
