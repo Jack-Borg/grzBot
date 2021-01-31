@@ -62,14 +62,16 @@ module.exports = {
 
 		const currReq = new Discord.MessageEmbed().setTitle('GrZ Requirements:').setDescription(`
             Level: 40
-            KDR: 3 ( 2.5 if your level is above 50)
+            KDR: 3 (2.5 if your level is above 50)
             KPG: 15
             Nukes: 25
         `);
 
-		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.channel.send(currReq);
+		if (appRequest.lvl < 40 || isNaN(appRequest.lvl)) return msg.channel.send(currReq);
 		// return msg.reply('not high enough lvl');
-		else if (appRequest.kdr < 2.95 || isNaN(appRequest.kdr)) return msg.channel.send(currReq);
+		else if (appRequest.kdr < 3 || isNaN(appRequest.kdr)) {
+			if (!(appRequest.lvl >= 40 && appRequest.kdr >= 2.5)) return msg.channel.send(currReq);
+		}
 		// return msg.reply('not high enough KDR');
 		else if (appRequest.kpg < 15 || isNaN(appRequest.kpg)) return msg.channel.send(currReq);
 		// return msg.reply('not high enough KPG');
