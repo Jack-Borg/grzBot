@@ -23,7 +23,7 @@ module.exports = {
 		args.forEach((arg) => {
 			arg = arg.split(':');
 
-			switch (arg[0]) {
+			switch (arg[0].toLowerCase()) {
 				case 'ign':
 					appRequest.ign = arg[1];
 					break;
@@ -60,13 +60,21 @@ module.exports = {
 					)
 			);
 
-		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.reply('not high enough lvl');
-		else if (appRequest.kdr < 2.95 || isNaN(appRequest.kdr))
-			return msg.reply('not high enough KDR');
-		else if (appRequest.kpg < 15 || isNaN(appRequest.kpg))
-			return msg.reply('not high enough KPG');
-		else if (appRequest.nukes < 50 || isNaN(appRequest.nukes))
-			return msg.reply('not enough Nukes');
+		const currReq = new Discord.MessageEmbed().setTitle('GrZ Requirements:').setDescription(`
+            Level: 30
+            KDR: 3
+            KPG: 15
+            Nukes: 50
+        `);
+
+		if (appRequest.lvl < 30 || isNaN(appRequest.lvl)) return msg.channel.send(currReq);
+		// return msg.reply('not high enough lvl');
+		else if (appRequest.kdr < 2.95 || isNaN(appRequest.kdr)) return msg.channel.send(currReq);
+		// return msg.reply('not high enough KDR');
+		else if (appRequest.kpg < 15 || isNaN(appRequest.kpg)) return msg.channel.send(currReq);
+		// return msg.reply('not high enough KPG');
+		else if (appRequest.nukes < 50 || isNaN(appRequest.nukes)) return msg.channel.send(currReq);
+		// return msg.reply('not enough Nukes');
 
 		const toTestRole = msg.guild.roles.cache.find((r) => r.id == process.env.TOTESTROLE);
 		msg.member.roles.add(toTestRole);

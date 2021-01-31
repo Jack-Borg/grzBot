@@ -12,13 +12,17 @@ module.exports = {
 		const reqRepo = new clanReq(dao);
 		reqRepo.getNext().then(
 			(val) => {
-				const embed = new Discord.MessageEmbed().setTitle('Next 5 applications');
+				const embed = new Discord.MessageEmbed().setTitle('Top 5 applicants');
 				let desc = [];
-				val.forEach((e) => {
+				val.forEach((a, i) => {
 					desc.push(
-						`${e.tag} **IGN: **${e.ign} **LVL: **${e.lvl} **KDR **:${e.kdr} **KPG**:${e.kpg} **Nukes**:${e.nukes}`
+						`**${i + 1}:** ${a.tag} **IGN: **${a.ign} **LVL: **${a.lvl} **KDR **:${
+							a.kdr
+						} **KPG**:${a.kpg} **Nukes**:${a.nukes}`
 					);
 				});
+
+				desc.push(`${val.length} applications in queue`);
 				embed.setDescription(desc.join('\n\n'));
 				msg.channel.send(embed);
 			},
