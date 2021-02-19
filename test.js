@@ -7,4 +7,4 @@
 // console.log(obj);
 require('dotenv').config();
 
-console.log('134785189128830977'.length);
+console.log(+'a');
