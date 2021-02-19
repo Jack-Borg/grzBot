@@ -12,6 +12,8 @@
 		"bluebird": "^3.7.2",
 		"discord.js": "^12.5.1",
 		"dotenv": "^8.2.0",
+		"mongodb": "^3.6.4",
+		"rsvp": "^4.8.5",
 		"sqlite3": "^5.0.0"
 	}
 }

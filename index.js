@@ -1,23 +1,14 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const clanRequest = require('./clanRequest');
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
-const AppDAO = require('./dao');
-
-const dao = new AppDAO('./db/grzDB.sqlite3');
 
 Object.keys(botCommands).map((key) => {
 	bot.commands.set(botCommands[key].name, botCommands[key]);
 });
 
-const TOKEN = process.env.TOKEN;
-
-const requestRepo = new clanRequest(dao);
-requestRepo.createTable();
-
-bot.login(TOKEN);
+bot.login(process.env.TOKEN);
 
 bot.on('ready', () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
@@ -29,11 +20,13 @@ bot.on('message', (msg) => {
 	// console.log('-----');
 	// console.log('args', args);
 	// console.log('command', command);
-
+	// msg.channel.messages
+	// 	.fetch(msg.reference.messageID)
+	// 	.then((message) => console.log(message.content));
 	if (!bot.commands.has(command)) return;
 
 	try {
-		bot.commands.get(command).execute(msg, args, dao, bot);
+		bot.commands.get(command).execute(msg, args, bot);
 	} catch (error) {
 		console.error(error);
 		msg.reply('there was an error trying to execute that command!');
