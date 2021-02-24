@@ -20,9 +20,7 @@ bot.on('message', (msg) => {
 	// console.log('-----');
 	// console.log('args', args);
 	// console.log('command', command);
-	// msg.channel.messages
-	// 	.fetch(msg.reference.messageID)
-	// 	.then((message) => console.log(message.content));
+
 	if (!bot.commands.has(command)) return;
 
 	try {
