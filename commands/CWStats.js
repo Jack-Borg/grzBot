@@ -8,11 +8,9 @@ module.exports = {
 	description: 'Clan War Stats',
 	execute(msg, args) {
 		if (
-			!(
-				msg.member.roles.cache.has(process.env.CAPTAINROLE) ||
-				msg.author.id == process.env.LEADERID ||
-				msg.channel.id == process.env.CWMANAGECHANNEL
-			)
+			!msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
+			msg.author.id != process.env.LEADERID &&
+			msg.channel.id != process.env.CWMANAGECHANNEL
 		)
 			return;
 
@@ -42,7 +40,10 @@ module.exports = {
 };
 
 function soldierEmbed(s) {
-	const embed = new Discord.MessageEmbed().setTitle(s.name + ' report');
+	const embed = new Discord.MessageEmbed()
+		.setTitle(s.name + ' report')
+		.setColor('#ffc800')
+		.setTimestamp();
 
 	const timeLeft = minToHM(s.last.minutesSpent);
 	const kpm = (s.last.kills / s.last.minutesSpent).toFixed(2);
@@ -58,7 +59,10 @@ function soldierEmbed(s) {
 }
 
 function clanEmbed(soldiers, warN) {
-	const embed = new Discord.MessageEmbed().setTitle('War: ' + warN + ' report');
+	const embed = new Discord.MessageEmbed()
+		.setTitle('Report: war ' + warN)
+		.setColor('#ffc800')
+		.setTimestamp();
 	const names = [];
 	const kills = [];
 	const kpm = [];
@@ -71,7 +75,7 @@ function clanEmbed(soldiers, warN) {
 		time.push(minToHM(s.last.minutesSpent));
 	});
 	embed.addFields(
-		{ name: 'names', value: names.join('\n'), inline: true },
+		{ name: 'name', value: names.join('\n'), inline: true },
 		{ name: 'kills', value: kills.join('\n'), inline: true },
 		{ name: 'time left', value: time.join('\n'), inline: true }
 	);
