@@ -20,8 +20,7 @@ bot.on('message', (msg) => {
 	// console.log('-----');
 	// console.log('args', args);
 	// console.log('command', command);
-
-	if (!bot.commands.has(command)) return;
+	if (!bot.commands.has(command) || msg.channel.type == 'dm') return;
 
 	try {
 		bot.commands.get(command).execute(msg, args, bot);
