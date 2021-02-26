@@ -8,7 +8,7 @@ module.exports = {
 	description: 'Clan War Stats',
 	execute(msg, args) {
 		if (
-			!msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
+			msg.channel.id != process.env.CWMANAGECHANNEL &&
 			msg.author.id != process.env.LEADERID &&
 			msg.author.id != process.env.DEVID
 		)
