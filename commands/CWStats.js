@@ -10,7 +10,7 @@ module.exports = {
 		if (
 			!msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
 			msg.author.id != process.env.LEADERID &&
-			msg.channel.id != process.env.CWMANAGECHANNEL
+			msg.author.id != process.env.DEVID
 		)
 			return;
 
