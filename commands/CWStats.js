@@ -20,7 +20,9 @@ module.exports = {
 			getSoldier(args[0]).then((soldier) => {
 				if (!soldier) {
 					msg.channel.send(
-						new Discord.MessageEmbed().setDescription(args[0] + ' not found')
+						new Discord.MessageEmbed()
+							.setDescription(args[0] + ' not found')
+							.setColor('#ffc800')
 					);
 					return;
 				}
@@ -41,7 +43,7 @@ module.exports = {
 
 function soldierEmbed(s) {
 	const embed = new Discord.MessageEmbed()
-		.setTitle(s.name + ' report')
+		.setTitle(s.name.replace('_', '\\_') + ' report')
 		.setColor('#ffc800')
 		.setTimestamp();
 
@@ -93,10 +95,9 @@ function minToHM(mins) {
 const dbUser = process.env.MONGOUSER;
 const dbPass = process.env.MONGOPASS;
 const dbName = process.env.MONGODBNAME;
+const url = `mongodb+srv://${dbUser}:${dbPass}@mongodb.ikrgp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 async function getSoldiers(warN) {
-	var url = `mongodb+srv://${dbUser}:${dbPass}@mongodb.ikrgp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
-
 	return new Promise((resolve, reject) => {
 		MongoClient.connect(
 			url,
@@ -120,7 +121,6 @@ async function getSoldiers(warN) {
 }
 
 async function getSoldier(name) {
-	var url = `mongodb+srv://${dbUser}:${dbPass}@mongodb.ikrgp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 	return new Promise((resolve, reject) => {
 		MongoClient.connect(
 			url,
@@ -133,8 +133,9 @@ async function getSoldier(name) {
 				var dbo = db.db('Krunker');
 
 				dbo.collection('wars')
-					.findOne({ name: name })
+					.findOne({ name: { $regex: new RegExp(name, 'i') } })
 					.then((result) => {
+						console.log('result', result);
 						resolve(result);
 					})
 					.catch((err) => console.error(`Failed to find document: ${err}`));
