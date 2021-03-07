@@ -49,7 +49,7 @@ function soldierEmbed(s) {
 
 	const timeLeft = minToHM(s.last.minutesSpent);
 	const kpm = (s.last.kills / s.last.minutesSpent).toFixed(2);
-	const totalKills = kpm * 240;
+	const totalKills = (kpm * 240).toFixed(2);
 
 	embed.addFields(
 		{ name: 'kills', value: s.last.kills, inline: true },
