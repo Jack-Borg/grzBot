@@ -135,7 +135,6 @@ async function getSoldier(name) {
 				dbo.collection('wars')
 					.findOne({ name: { $regex: new RegExp(name, 'i') } })
 					.then((result) => {
-						console.log('result', result);
 						resolve(result);
 					})
 					.catch((err) => console.error(`Failed to find document: ${err}`));
