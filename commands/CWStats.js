@@ -17,7 +17,7 @@ module.exports = {
 		if (args.length == 0) args[0] = process.env.CURRENTWAR;
 
 		if (isNaN(args[0])) {
-			getSoldier(args[0]).then((soldier) => {
+			getSoldier(args[0], args[1]).then((soldier) => {
 				if (!soldier) {
 					msg.channel.send(
 						new Discord.MessageEmbed()
@@ -120,7 +120,7 @@ async function getSoldiers(warN) {
 	});
 }
 
-async function getSoldier(name) {
+async function getSoldier(name, warNumber = process.env.CURRENTWAR) {
 	return new Promise((resolve, reject) => {
 		MongoClient.connect(
 			url,
@@ -133,7 +133,7 @@ async function getSoldier(name) {
 				var dbo = db.db('Krunker');
 
 				dbo.collection('wars')
-					.findOne({ name: { $regex: new RegExp(name, 'i') } })
+					.findOne({ name: { $regex: new RegExp(name, 'i') }, war: parseInt(warNumber) })
 					.then((result) => {
 						resolve(result);
 					})
