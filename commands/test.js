@@ -7,7 +7,7 @@ module.exports = {
 	execute(msg, args, bot) {
 		if (msg.author.id !== process.env.DEVID) return;
 
-		msg.channel.send('g.pf jack_borg');
+		msg.reply(new Discord.MessageEmbed().setTitle(':email: you got mail').setColor('#ffc800'));
 		// console.log(msg.guild.roles.cache.map((role) => role.name + ': ' + role.id));
 		// console.log(
 		// 	msg.guild.members.cache

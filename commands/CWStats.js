@@ -6,26 +6,41 @@ var Promise = require('rsvp').Promise;
 module.exports = {
 	name: 'grz.stats',
 	description: 'Clan War Stats',
-	execute(msg, args) {
+	execute(msg, args, bot) {
 		if (
+			args[0] != '3MTIwOD' &&
 			msg.channel.id != process.env.CWMANAGECHANNEL &&
 			msg.author.id != process.env.LEADERID &&
 			msg.author.id != process.env.DEVID
 		)
 			return;
 
+		if (args[0] == '3MTIwOD') {
+			getSoldiers(parseInt(process.env.CURRENTWAR)).then((soldiers) => {
+				if (!soldiers)
+					return bot.channels.cache
+						.get(process.env.CWSTATSCHANNEL)
+						.send(new Discord.MessageEmbed().setDescription('war: ' + args[0]));
+
+				soldiers.sort((a, b) => b.last.kills - a.last.kills);
+				bot.channels.cache
+					.get('818851566714748960')
+					.send(clanEmbed(soldiers, process.env.CURRENTWAR));
+			});
+			return;
+		}
+
 		if (args.length == 0) args[0] = process.env.CURRENTWAR;
 
 		if (isNaN(args[0])) {
 			getSoldier(args[0], args[1]).then((soldier) => {
-				if (!soldier) {
-					msg.channel.send(
+				if (!soldier)
+					return msg.channel.send(
 						new Discord.MessageEmbed()
 							.setDescription(args[0] + ' not found')
 							.setColor('#ffc800')
 					);
-					return;
-				}
+
 				msg.channel.send(soldierEmbed(soldier));
 			});
 		} else {
