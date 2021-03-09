@@ -39,8 +39,8 @@ bot.on('message', (msg) => {
 	}
 });
 
-new cron.CronJob('1 */30 * * * *', () => {
-	scrape().then((res) =>
-		dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
-	);
-}).start();
+// new cron.CronJob('1 */30 * * * *', () => {
+// 	scrape().then((res) =>
+// 		dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
+// 	);
+// }).start();
