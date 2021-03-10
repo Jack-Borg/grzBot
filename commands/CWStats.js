@@ -24,7 +24,7 @@ module.exports = {
 
 				soldiers.sort((a, b) => b.last.kills - a.last.kills);
 				bot.channels.cache
-					.get(CWSTATSCHANNEL)
+					.get(process.env.CWSTATSCHANNEL)
 					.send(clanEmbed(soldiers, process.env.CURRENTWAR));
 			});
 			return;
