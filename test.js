@@ -13,6 +13,11 @@
 // 	if (!isNaN(e)) console.log(parseFloat(e));
 // });
 
-const scrape = require('./scrape');
-const dao = require('./dao');
-scrape().then((res) => dao(res));
+// const scrape = require('./scrape');
+// const dao = require('./dao');
+// scrape().then((res) => dao(res));
+const cron = require('cron');
+
+new cron.CronJob('25,55 * * * * *', () => {
+	console.log('cron');
+}).start();
