@@ -67,10 +67,10 @@ function soldierEmbed(s) {
 	const totalKills = (kpm * 240).toFixed(2);
 
 	embed.addFields(
-		{ name: 'kills', value: s.last.kills, inline: true },
-		{ name: 'time left', value: timeLeft, inline: true },
-		{ name: 'kpm', value: kpm, inline: true },
-		{ name: 'est. total kills', value: totalKills, inline: true }
+		{ name: 'Kills', value: s.last.kills, inline: true },
+		{ name: 'Time left', value: timeLeft, inline: true },
+		{ name: 'KPM', value: kpm, inline: true },
+		{ name: 'Est. total kills', value: totalKills, inline: true }
 	);
 	return embed;
 }
@@ -88,13 +88,19 @@ function clanEmbed(soldiers, warN) {
 	soldiers.forEach((s) => {
 		names.push(s.name.replace('_', '\\_'));
 		kills.push(s.last.kills);
-		kpm.push((s.last.kills / s.last.minutesSpent).toFixed(2));
+		kpm.push(s.last.kills / s.last.minutesSpent);
 		time.push(minToHM(s.last.minutesSpent));
 	});
+
+	const avgKPM = (kpm.reduce((p, c) => p + c) / kpm.length).toFixed(2);
+	const avgEstKills = (avgKPM * 240).toFixed(2);
+
 	embed.addFields(
-		{ name: 'name', value: names.join('\n'), inline: true },
-		{ name: 'kills', value: kills.join('\n'), inline: true },
-		{ name: 'time left', value: time.join('\n'), inline: true }
+		{ name: 'Name', value: names.join('\n'), inline: true },
+		{ name: 'Kills', value: kills.join('\n'), inline: true },
+		{ name: 'Time left', value: time.join('\n'), inline: true },
+		{ name: 'Avg KPM', value: avgKPM, inline: true },
+		{ name: 'Avg est. kills', value: avgEstKills, inline: true }
 	);
 
 	return embed;
