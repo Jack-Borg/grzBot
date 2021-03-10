@@ -84,12 +84,15 @@ function clanEmbed(soldiers, warN) {
 	const kills = [];
 	const kpm = [];
 	const time = [];
+	const totalCount = soldiers.length;
+	let activeCount = 0;
 
 	soldiers.forEach((s) => {
 		names.push(s.name.replace('_', '\\_'));
 		kills.push(s.last.kills);
 		kpm.push(s.last.kills / s.last.minutesSpent);
 		time.push(minToHM(s.last.minutesSpent));
+		if (s.last.minutesSpent < 240) activeCount++;
 	});
 
 	const avgKPM = (kpm.reduce((p, c) => p + c) / kpm.length).toFixed(2);
@@ -100,7 +103,9 @@ function clanEmbed(soldiers, warN) {
 		{ name: 'Kills', value: kills.join('\n'), inline: true },
 		{ name: 'Time left', value: time.join('\n'), inline: true },
 		{ name: 'Avg KPM', value: avgKPM, inline: true },
-		{ name: 'Avg est. kills', value: avgEstKills, inline: true }
+		{ name: 'Avg est. kills', value: avgEstKills, inline: true },
+		{ name: 'Active Soldiers', value: activeCount, inline: true },
+		{ name: 'Total Soldiers', value: totalCount, inline: true }
 	);
 
 	return embed;
