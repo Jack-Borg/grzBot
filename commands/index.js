@@ -4,4 +4,5 @@ module.exports = {
 	// Apply: require('./apply'),
 	Test: require('./test'),
 	Hist: require('./hist'),
+	Top: require('./top'),
 };

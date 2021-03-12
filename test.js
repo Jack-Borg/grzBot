@@ -20,9 +20,39 @@
 // 	console.log(r.filter((e) => e.scores.length == 1).map((e) => e.name))
 // );
 
-function test({ a, b }) {
-	console.log(a, b);
-}
-const b = '123';
+const { getAllWarReport } = require('./dao');
+// const { numberFormat, minToHM, embed } = require('../utils');
 
-test({ b });
+getAllWarReport().then((soldiers) => {
+	let tmp = {};
+
+	soldiers.forEach((s) => {
+		if (tmp[s.name]) return tmp[s.name].push({ war: s.war, score: s.last });
+		tmp[s.name] = [{ war: s.war, score: s.last }];
+	});
+
+	scores = [];
+	for (const k in tmp) {
+		const sol = tmp[k];
+
+		let kills;
+		let kpm;
+		if (sol.length > 1) {
+			kills = sol.reduce((a, b) => a.score.kills + b.score.kills) / sol.length;
+			kpm =
+				kills /
+				(sol.reduce((a, b) => a.score.minutesSpent + b.score.minutesSpent) / sol.length);
+		} else {
+			kills = sol[0].score.kills;
+			kpm = kills / sol[0].score.minutesSpent;
+		}
+
+		scores.push({
+			name: k,
+			kills,
+			kpm,
+		});
+	}
+
+	console.log(scores.sort((a, b) => b.kpm - a.kpm));
+});

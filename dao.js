@@ -50,6 +50,28 @@ module.exports = {
 			);
 		});
 	},
+	getAllWarReport: async function (warN) {
+		return new Promise((resolve, reject) => {
+			MongoClient.connect(
+				url,
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				},
+				function (err, db) {
+					if (err) throw err;
+					var dbo = db.db('Krunker');
+
+					dbo.collection('wars')
+						.find()
+						.toArray((err, result) => {
+							if (err) reject(err);
+							resolve(result);
+						});
+				}
+			);
+		});
+	},
 	getSoldierReport: async function (name, warNumber = process.env.CURRENTWAR) {
 		return new Promise((resolve, reject) => {
 			MongoClient.connect(

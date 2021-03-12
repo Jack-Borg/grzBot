@@ -66,7 +66,7 @@ function soldierEmbed(s) {
 		{ name: 'Est. total kills', value: numberFormat(estKills.toFixed(2)) },
 	];
 
-	return embed({ title: s.name.replace('_', '\\_') + ' in war ' + s.war, fields });
+	return embed({ title: s.name.replaceAll('_', '\\_') + ' in war ' + s.war, fields });
 }
 
 function clanEmbed(soldiers, warN) {
@@ -79,7 +79,7 @@ function clanEmbed(soldiers, warN) {
 	let totalKills = 0;
 
 	soldiers.forEach((s) => {
-		names.push(s.name.replace('_', '\\_'));
+		names.push(s.name.replaceAll('_', '\\_'));
 		kills.push(numberFormat(s.last.kills));
 		totalKills += s.last.kills;
 		kpm.push(s.last.kills / s.last.minutesSpent);
