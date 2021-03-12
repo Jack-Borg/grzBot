@@ -13,11 +13,16 @@
 // 	if (!isNaN(e)) console.log(parseFloat(e));
 // });
 
-// const scrape = require('./scrape');
-// const dao = require('./dao');
-// scrape().then((res) => dao(res));
-const cron = require('cron');
+// newGetSoldierReport('jack_borg').then((s) => console.log(s));
+// dao.delete();
+// dao.getWarReport(2).then((r) => console.log(r));
+// dao.getWarReport(2).then((r) =>
+// 	console.log(r.filter((e) => e.scores.length == 1).map((e) => e.name))
+// );
 
-new cron.CronJob('25,55 * * * * *', () => {
-	console.log('cron');
-}).start();
+function test({ a, b }) {
+	console.log(a, b);
+}
+const b = '123';
+
+test({ b });

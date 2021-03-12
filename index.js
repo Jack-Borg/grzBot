@@ -5,8 +5,6 @@ bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
 
 const cron = require('cron');
-const scrape = require('./scrape');
-const dao = require('./dao');
 
 Object.keys(botCommands).map((key) => {
 	bot.commands.set(botCommands[key].name, botCommands[key]);
@@ -44,4 +42,4 @@ new cron.CronJob('1 */30 * * * *', () => {
 	// 	dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
 	// );
 	bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
-}).start();
+}); //.start();
