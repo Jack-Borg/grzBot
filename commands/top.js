@@ -56,7 +56,7 @@ function clanEmbed(soldiers) {
 	const kpm = [];
 
 	soldiers.forEach((s) => {
-		names.push(s.name.replaceAll('_', '\\_'));
+		names.push(s.name.replace('_', '\\_'));
 		kills.push(numberFormat(s.kills));
 		kpm.push(s.kpm.toFixed(2));
 	});

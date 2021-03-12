@@ -39,5 +39,5 @@ function soldierEmbed(r) {
 		{ name: 'Time left', value: time },
 	];
 
-	return embed({ title: r.name.replaceAll('_', '\\_') + ' history', fields });
+	return embed({ title: r.name.replace('_', '\\_') + ' history', fields });
 }
