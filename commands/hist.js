@@ -6,7 +6,12 @@ module.exports = {
 	name: 'grz.hist',
 	description: 'history cmd',
 	execute(msg, args, bot) {
-		if (msg.author.id !== process.env.DEVID) return;
+		if (
+			msg.channel.id != process.env.CWMANAGECHANNEL &&
+			msg.author.id != process.env.LEADERID &&
+			msg.author.id != process.env.DEVID
+		)
+			return;
 
 		newGetSoldierReport(args[0]).then((soldier) => {
 			if (!soldier)
