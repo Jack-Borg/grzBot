@@ -113,7 +113,7 @@ module.exports = {
 						.find({ name: { $regex: new RegExp(name, 'i') } })
 						.toArray((err, result) => {
 							if (err) reject(err);
-							if (result.length == 0) resolve(undefined);
+							if (result.length == 0) return resolve(undefined);
 
 							result = {
 								name: result[0].name,
