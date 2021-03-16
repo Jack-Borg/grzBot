@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	numberFormat: function (n) {
-		return new Intl.NumberFormat('de-DE').format(n);
+		return new Intl.NumberFormat('de-DE', { maximumFractionDigits: 2 }).format(n);
 	},
 	minToHM: function (mins) {
 		const timeLeft = 240 - mins;

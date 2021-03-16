@@ -20,8 +20,9 @@
 // 	console.log(r.filter((e) => e.scores.length == 1).map((e) => e.name))
 // );
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//top soldiers 5 war program
 const { getAllWarReport } = require('./dao');
-// const { numberFormat, minToHM, embed } = require('../utils');
 
 getAllWarReport().then((soldiers) => {
 	let tmp = {};
@@ -30,29 +31,24 @@ getAllWarReport().then((soldiers) => {
 		if (tmp[s.name]) return tmp[s.name].push({ war: s.war, score: s.last });
 		tmp[s.name] = [{ war: s.war, score: s.last }];
 	});
+	// console.log(tmp);
 
 	scores = [];
 	for (const k in tmp) {
 		const sol = tmp[k];
 
 		let kills;
-		let kpm;
 		if (sol.length > 1) {
-			kills = sol.reduce((a, b) => a.score.kills + b.score.kills) / sol.length;
-			kpm =
-				kills /
-				(sol.reduce((a, b) => a.score.minutesSpent + b.score.minutesSpent) / sol.length);
+			kills = sol.reduce((a, b) => a.score.kills + b.score.kills);
 		} else {
 			kills = sol[0].score.kills;
-			kpm = kills / sol[0].score.minutesSpent;
 		}
 
 		scores.push({
 			name: k,
 			kills,
-			kpm,
 		});
 	}
 
-	console.log(scores.sort((a, b) => b.kpm - a.kpm));
+	console.log(scores.sort((a, b) => b.kills - a.kills));
 });

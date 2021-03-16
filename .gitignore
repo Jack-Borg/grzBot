@@ -1,4 +1,5 @@
 commands/apply.js
+commands/archive.js
 .git
 .config
 
