@@ -6,14 +6,20 @@ module.exports = {
 	name: 'grz.xp',
 	description: 'class xp',
 	execute(msg, args, bot) {
-		if (args.length == 0) return msg.channel.send(embed({ title: 'error msg' }));
+		if (args.length == 0)
+			return msg.channel.send(
+				embed({
+					title: ':x: Missing arguments',
+					desc: `grz.xp \`<current level>\` \`<target level>\``,
+				})
+			);
 
 		let currLvl = 0;
 		let tarLvl = 0;
 
 		if (args.length == 1) {
 			currLvl = 1;
-			tarLvl = args[0];
+			tarLvl = parseInt(args[0]);
 			// if (tarLvl > 1000)
 			// 	return msg.channel.send(
 			// 		embed({
@@ -23,8 +29,8 @@ module.exports = {
 			// 	);
 			// msg.channel.send(xpTo(args[0]));
 		} else if (args.length == 2) {
-			currLvl = args[0];
-			tarLvl = args[1];
+			currLvl = parseInt(args[0]);
+			tarLvl = parseInt(args[1]);
 		}
 		if (currLvl < 1 || tarLvl < 1)
 			return msg.channel.send(
