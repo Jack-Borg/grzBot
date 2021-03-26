@@ -20,14 +20,6 @@ module.exports = {
 		if (args.length == 1) {
 			currLvl = 1;
 			tarLvl = parseInt(args[0]);
-			// if (tarLvl > 1000)
-			// 	return msg.channel.send(
-			// 		embed({
-			// 			title: ':x: Number too large',
-			// 			desc: 'Largest supported level is 1000',
-			// 		})
-			// 	);
-			// msg.channel.send(xpTo(args[0]));
 		} else if (args.length == 2) {
 			currLvl = parseInt(args[0]);
 			tarLvl = parseInt(args[1]);
