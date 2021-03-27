@@ -82,14 +82,18 @@ function clanEmbed(soldiers, warN) {
 		names.push(s.name.replace('_', '\\_'));
 		kills.push(numberFormat(s.last.kills));
 		totalKills += s.last.kills;
-		kpm.push(s.last.kills / s.last.minutesSpent);
+		const tmp = s.last.kills / s.last.minutesSpent;
+		kpm.push(isNaN(tmp) ? 0 : tmp);
 		time.push(minToHM(s.last.minutesSpent));
 		if (s.last.minutesSpent < 240) activeCount++;
 	});
 
+	console.log(kpm);
+
 	const avgKPM = kpm.reduce((p, c) => p + c) / kpm.length;
 	const avgEstKills = avgKPM * 240;
-
+	console.log('kpm', avgKPM);
+	console.log('est', avgEstKills);
 	const fields = [
 		{ name: 'Name', value: names.join('\n') },
 		{ name: 'Kills', value: kills.join('\n') },
