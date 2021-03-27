@@ -33,29 +33,31 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function xp(lvl) {
-	if (lvl == 2) return 4444;
+// function xp(lvl) {
+// 	if (lvl == 2) return 4444;
 
-	const res = 1111 + 2222 * (lvl - 1);
+// 	const res = 1111 + 2222 * (lvl - 1);
 
-	return res + parseInt(res / 10000);
-}
+// 	return res + parseInt(res / 10000);
+// }
 
-function xpTo(lvl) {
-	let total = 0;
-	for (let i = 1; i < lvl; i++) {
-		total += xp(i);
-	}
-	return total;
-}
+// function xpTo(lvl) {
+// 	let total = 0;
+// 	for (let i = 1; i < lvl; i++) {
+// 		total += xp(i);
+// 	}
+// 	return total;
+// }
 
-function xpToTarget(currLvl, tarLvl) {
-	return xpTo(tarLvl) - xpTo(currLvl);
-}
+// function xpToTarget(currLvl, tarLvl) {
+// 	return xpTo(tarLvl) - xpTo(currLvl);
+// }
 
-function xpTo2(lvl) {
-	return 1111 + 2222 * (lvl - 1) * ((lvl * (lvl + 1)) / 2);
-}
+// function xpTo2(lvl) {
+// 	return 1111 + 2222 * (lvl - 1) //* ((lvl * (lvl + 1)) / 2);
+// }
 
-console.log(xpTo(5));
-console.log(xpTo2(5));
+// console.log(xpTo(5));
+// console.log(xpTo2(5));
+
+console.log(isNaN(0 / 1) ? 0 : 1);
