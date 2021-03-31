@@ -1,29 +1,30 @@
 require('dotenv').config();
-const Discord = require('discord.js');
 const { embed, numberFormat } = require('../utils');
 
 module.exports = {
 	name: 'grz.xp',
 	description: 'class xp',
 	execute(msg, args, bot) {
-		if (args.length == 0)
+		if (args.length <= 1)
 			return msg.channel.send(
 				embed({
 					title: ':x: Missing arguments',
-					desc: `grz.xp \`<current level>\` \`<target level>\``,
+					desc: `grz.xp \`<Current level>\` \`<Target level>\` \`[Optional current xp]\``,
 				})
 			);
 
-		let currLvl = 0;
-		let tarLvl = 0;
+		let currLvl = parseInt(args[0]);
+		let tarLvl = parseInt(args[1]);
+		let currentXp = args[2] ? parseInt(args[2]) : 0;
 
-		if (args.length == 1) {
-			currLvl = 1;
-			tarLvl = parseInt(args[0]);
-		} else if (args.length == 2) {
-			currLvl = parseInt(args[0]);
-			tarLvl = parseInt(args[1]);
-		}
+		console.log('cur', currentXp);
+		console.log('cur lvl xp', xp(currLvl));
+		// if (args.length >= 2) {
+		// 	currLvl = parseInt(args[0]);
+		// 	tarLvl = parseInt(args[1]);
+		//     currentXp = parseInt(args[2])
+		// }
+
 		if (currLvl < 1 || tarLvl < 1)
 			return msg.channel.send(
 				embed({
@@ -46,7 +47,22 @@ module.exports = {
 				})
 			);
 
-		const totalReq = xpToTarget(currLvl, tarLvl);
+		if (currentXp > xp(currLvl))
+			return msg.channel.send(
+				embed({
+					title: ':x: Current xp too large',
+					desc: 'Current xp larger than required for current level',
+				})
+			);
+
+		if (currLvl <= 0 || tarLvl <= 0 || currentXp < 0)
+			return msg.channel.send(
+				embed({
+					title: ':x: Argument cannot be lower than 0',
+				})
+			);
+
+		const totalReq = xpToTarget(currLvl, tarLvl) - currentXp;
 		const desc = `
                 Current level: \`${currLvl}\`
                 Target level: \`${tarLvl}\`
