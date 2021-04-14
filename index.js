@@ -42,4 +42,4 @@ new cron.CronJob('1 */30 * * * *', () => {
 	// 	dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
 	// );
 	bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
-}).start();
+})//.start();
