@@ -60,4 +60,4 @@
 // console.log(xpTo(5));
 // console.log(xpTo2(5));
 
-console.log(isNaN(0 / 1) ? 0 : 1);
+// console.log(isNaN(0 / 1) ? 0 : 1);

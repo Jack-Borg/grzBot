@@ -17,14 +17,6 @@ module.exports = {
 		let tarLvl = parseInt(args[1]);
 		let currentXp = args[2] ? parseInt(args[2]) : 0;
 
-		console.log('cur', currentXp);
-		console.log('cur lvl xp', xp(currLvl));
-		// if (args.length >= 2) {
-		// 	currLvl = parseInt(args[0]);
-		// 	tarLvl = parseInt(args[1]);
-		//     currentXp = parseInt(args[2])
-		// }
-
 		if (currLvl < 1 || tarLvl < 1)
 			return msg.channel.send(
 				embed({
