@@ -9,7 +9,6 @@ const url = `mongodb+srv://${dbUser}:${dbPass}@mongodb.ikrgp.mongodb.net/${dbNam
 
 module.exports = {
 	postReport: async function (report) {
-		console.log(report);
 		await MongoClient.connect(url, async function (err, db) {
 			if (err) throw err;
 			var dbo = db.db('Krunker');

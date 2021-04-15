@@ -6,13 +6,14 @@ module.exports = {
 	name: 'grz.help',
 	description: 'help cmd',
 	execute(msg, args, bot) {
-		if (msg.author.id !== process.env.DEVID) return;
-
 		msg.reply(embed({ title: ':email: you got mail' }));
 
 		const fields = [];
 
-		if (msg.member.roles.cache.has(process.env.CAPTAINROLE)) {
+		if (
+			msg.member.roles.cache.has(process.env.CAPTAINROLE) ||
+			msg.author.id == process.env.LEADERID
+		) {
 			const cwf = [
 				'grz.stats [War number]',
 				'grz.stats <kr-username>',
@@ -47,4 +48,3 @@ module.exports = {
 		msg.author.send(embed({ title: `${emoji} Help`, desc: `**Prefix:** \`grz.\``, fields }));
 	},
 };
-// https://cdn.discordapp.com/emojis/815588419673391186.png?v=1
