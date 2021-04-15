@@ -8,7 +8,7 @@ module.exports = {
 	execute(msg, args, bot) {
 		if (msg.author.id !== process.env.DEVID) return;
 
-		// msg.reply(embed({ title: ':email: you got mail' }));
+		msg.reply(embed({ title: ':email: you got mail' }));
 
 		const fields = [];
 
@@ -43,8 +43,8 @@ module.exports = {
 			inline: false,
 		});
 
-		const emoji = bot.emojis.cache.get('832374768618700891');
-		msg.channel.send(embed({ title: `${emoji} Help`, desc: `**Prefix:** \`grz.\``, fields }));
+		const emoji = bot.emojis.cache.get('815588419673391186');
+		msg.author.send(embed({ title: `${emoji} Help`, desc: `**Prefix:** \`grz.\``, fields }));
 	},
 };
 // https://cdn.discordapp.com/emojis/815588419673391186.png?v=1
