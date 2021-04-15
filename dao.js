@@ -4,10 +4,12 @@ require('dotenv').config();
 const dbUser = process.env.MONGOUSER;
 const dbPass = process.env.MONGOPASS;
 const dbName = process.env.MONGODBNAME;
+const colName = process.env.MONGOCOLNAME;
 const url = `mongodb+srv://${dbUser}:${dbPass}@mongodb.ikrgp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 module.exports = {
 	postReport: async function (report) {
+		console.log(report);
 		await MongoClient.connect(url, async function (err, db) {
 			if (err) throw err;
 			var dbo = db.db('Krunker');
@@ -20,7 +22,7 @@ module.exports = {
 					},
 				};
 				const options = { upsert: true };
-				dbo.collection('wars').updateOne(query, update, options);
+				dbo.collection(colName).updateOne(query, update, options);
 			});
 			await setTimeout(() => {
 				db.close();
@@ -40,7 +42,7 @@ module.exports = {
 					if (err) throw err;
 					var dbo = db.db('Krunker');
 
-					dbo.collection('wars')
+					dbo.collection(colName)
 						.find({ war: warN })
 						.toArray((err, result) => {
 							if (err) reject(err);
@@ -62,7 +64,7 @@ module.exports = {
 					if (err) throw err;
 					var dbo = db.db('Krunker');
 
-					dbo.collection('wars')
+					dbo.collection(colName)
 						.find()
 						.toArray((err, result) => {
 							if (err) reject(err);
@@ -84,7 +86,7 @@ module.exports = {
 					if (err) throw err;
 					var dbo = db.db('Krunker');
 
-					dbo.collection('wars')
+					dbo.collection(colName)
 						.findOne({
 							name: { $regex: new RegExp(name, 'i') },
 							war: parseInt(warNumber),
@@ -109,7 +111,7 @@ module.exports = {
 					if (err) throw err;
 					var dbo = db.db('Krunker');
 
-					dbo.collection('wars')
+					dbo.collection(colName)
 						.find({ name: { $regex: new RegExp(name, 'i') } })
 						.toArray((err, result) => {
 							if (err) reject(err);
@@ -132,7 +134,7 @@ module.exports = {
 	// 	MongoClient.connect(url, function (err, db) {
 	// 		if (err) throw err;
 	// 		var dbo = db.db('Krunker');
-	// 		dbo.collection('wars').deleteMany({ war: NaN });
+	// 		dbo.collection(colName).deleteMany({ war: '3' });
 	// 	});
 	// },
 };

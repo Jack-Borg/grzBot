@@ -62,9 +62,9 @@ function clanEmbed(soldiers) {
 	});
 
 	const fields = [
-		{ name: 'Name', value: names.join('\n') },
-		{ name: 'Kills', value: kills.join('\n') },
-		{ name: 'KPM', value: kpm },
+		{ name: 'Name', value: names.join('\n'), inline: true },
+		{ name: 'Kills', value: kills.join('\n'), inline: true },
+		{ name: 'KPM', value: kpm, inline: true },
 	];
 
 	return embed({ title: 'Top soldiers', fields });
