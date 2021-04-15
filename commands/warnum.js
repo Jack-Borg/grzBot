@@ -6,8 +6,8 @@ module.exports = {
 	description: 'Dev cmd to change war number',
 	execute(msg, args, bot) {
 		if (msg.author.id !== process.env.DEVID) return;
-		if (isNaN(args[0])) return msg.channel.send('Not a number');
 		if (args.length !== 1) return msg.channel.send('Current war is ' + process.env.CURRENTWAR);
+		if (isNaN(args[0])) return msg.channel.send('Not a number');
 
 		const value = args[0];
 

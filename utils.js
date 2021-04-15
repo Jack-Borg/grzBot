@@ -18,7 +18,7 @@ module.exports = {
 
 		if (fields) {
 			for (const f of fields) {
-				embed.addField(f.name, f.value, true);
+				embed.addField(f.name, f.value, f.inline);
 			}
 		}
 

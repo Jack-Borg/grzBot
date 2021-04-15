@@ -34,9 +34,9 @@ function soldierEmbed(r) {
 	});
 
 	const fields = [
-		{ name: 'Wars', value: wars },
-		{ name: 'Kills', value: kills },
-		{ name: 'Time left', value: time },
+		{ name: 'Wars', value: wars, inline: true },
+		{ name: 'Kills', value: kills, inline: true },
+		{ name: 'Time left', value: time, inline: true },
 	];
 
 	return embed({ title: r.name.replace('_', '\\_') + ' history', fields });

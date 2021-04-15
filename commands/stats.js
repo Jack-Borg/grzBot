@@ -60,10 +60,10 @@ function soldierEmbed(s) {
 	const estKills = kpm * 240;
 
 	const fields = [
-		{ name: 'Kills', value: numberFormat(s.last.kills) },
-		{ name: 'Time left', value: timeLeft },
-		{ name: 'KPM', value: kpm.toFixed(2) },
-		{ name: 'Est. total kills', value: numberFormat(estKills.toFixed(2)) },
+		{ name: 'Kills', value: numberFormat(s.last.kills), inline: true },
+		{ name: 'Time left', value: timeLeft, inline: true },
+		{ name: 'KPM', value: kpm.toFixed(2), inline: true },
+		{ name: 'Est. total kills', value: numberFormat(estKills.toFixed(2)), inline: true },
 	];
 
 	return embed({ title: s.name.replace('_', '\\_') + ' in war ' + s.war, fields });
@@ -93,17 +93,18 @@ function clanEmbed(soldiers, warN) {
 	const avgEstKills = avgKPM * 240;
 
 	const fields = [
-		{ name: 'Name', value: names.join('\n') },
-		{ name: 'Kills', value: kills.join('\n') },
-		{ name: 'Time left', value: time.join('\n') },
-		{ name: 'Kills', value: numberFormat(totalKills) },
-		{ name: 'Avg KPM', value: numberFormat(avgKPM.toFixed(2)) },
+		{ name: 'Name', value: names.join('\n'), inline: true },
+		{ name: 'Kills', value: kills.join('\n'), inline: true },
+		{ name: 'Time left', value: time.join('\n'), inline: true },
+		{ name: 'Kills', value: numberFormat(totalKills), inline: true },
+		{ name: 'Avg KPM', value: numberFormat(avgKPM.toFixed(2)), inline: true },
 		{
 			name: 'Avg est. kills',
 			value: numberFormat(avgEstKills.toFixed(2)),
+			inline: true,
 		},
-		{ name: 'Total Soldiers', value: totalCount },
-		{ name: 'Active Soldiers', value: activeCount },
+		{ name: 'Total Soldiers', value: totalCount, inline: true },
+		{ name: 'Active Soldiers', value: activeCount, inline: true },
 	];
 
 	return embed({ title: 'Report: war ' + warN, fields });
