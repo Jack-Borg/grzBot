@@ -5,9 +5,8 @@ module.exports = {
 		return new Intl.NumberFormat('da-DK', { maximumFractionDigits: 2 }).format(n);
 	},
 	minToHM: function (mins) {
-		const timeLeft = 240 - mins;
-		const h = parseInt(timeLeft / 60);
-		const m = timeLeft % 60;
+		const h = parseInt(mins / 60);
+		const m = mins % 60;
 		return `${h}H ${m}M`;
 	},
 	embed: function ({ title, desc, fields, stamp }) {

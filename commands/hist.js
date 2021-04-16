@@ -28,9 +28,10 @@ function soldierEmbed(r) {
 	const time = [];
 
 	r.wars.forEach((w) => {
+		const contractLength = w.war <= 3 ? 240 : 180;
 		wars.push(w.war);
 		kills.push(numberFormat(w.score.kills));
-		time.push(minToHM(w.score.minutesSpent));
+		time.push(minToHM(contractLength - w.score.minutesSpent));
 	});
 
 	const fields = [

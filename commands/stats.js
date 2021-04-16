@@ -55,9 +55,11 @@ module.exports = {
 };
 
 function soldierEmbed(s) {
-	const timeLeft = minToHM(s.last.minutesSpent);
+	const contractLength = s.war <= 3 ? 240 : 180;
+
+	const timeLeft = minToHM(contractLength - s.last.minutesSpent);
 	const kpm = s.last.kills / s.last.minutesSpent;
-	const estKills = kpm * 240;
+	const estKills = kpm * contractLength;
 
 	const fields = [
 		{ name: 'Kills', value: numberFormat(s.last.kills), inline: true },
@@ -70,6 +72,7 @@ function soldierEmbed(s) {
 }
 
 function clanEmbed(soldiers, warN) {
+	const contractLength = warN <= 3 ? 240 : 180;
 	const names = [];
 	const kills = [];
 	const kpm = [];
@@ -85,12 +88,12 @@ function clanEmbed(soldiers, warN) {
 		//handle 0/0 == NaN
 		const tmp = s.last.kills / s.last.minutesSpent;
 		kpm.push(isNaN(tmp) ? 0 : tmp);
-		time.push(minToHM(s.last.minutesSpent));
-		if (s.last.minutesSpent < 240) activeCount++;
+		time.push(minToHM(contractLength - s.last.minutesSpent));
+		if (s.last.minutesSpent < contractLength) activeCount++;
 	});
 
 	const avgKPM = kpm.reduce((p, c) => p + c) / kpm.length;
-	const avgEstKills = avgKPM * 240;
+	const avgEstKills = avgKPM * contractLength;
 
 	const fields = [
 		{ name: 'Name', value: names.join('\n'), inline: true },

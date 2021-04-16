@@ -63,7 +63,7 @@ module.exports = async function () {
 				const line = arr.pop();
 				if (line.tagName == 'SPAN') {
 					const kills = parseInt(line.innerHTML.replace(',', ''));
-					soldiers.push({ name, kills: kills, minutesSpent: 240 });
+					soldiers.push({ name, kills: kills, minutesSpent: 180 });
 				} else if (line.tagName == 'DIV') {
 					line.childNodes[1].onclick();
 					const kills = parseInt(
@@ -77,8 +77,8 @@ module.exports = async function () {
 					time.pop();
 					const minutesSpent =
 						time.length == 1
-							? 240 - parseInt(time[0])
-							: 240 - (parseInt(time[0]) * 60 + parseInt(time[1]));
+							? 180 - parseInt(time[0])
+							: 180 - (parseInt(time[0]) * 60 + parseInt(time[1]));
 					soldiers.push({ name, kills, minutesSpent });
 				}
 			}
