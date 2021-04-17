@@ -16,7 +16,7 @@ module.exports = {
 		) {
 			const cwf = [
 				'grz.stats [War number]',
-				'grz.stats <kr-username>',
+				'grz.stats <kr-username> [War number]',
 				'grz.hist <kr-username>',
 				'grz.post <Post data>',
 			];
