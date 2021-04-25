@@ -7,7 +7,7 @@ module.exports = {
 	description: 'history cmd',
 	execute(msg, args, bot) {
 		if (
-			msg.channel.id != process.env.CWMANAGECHANNEL &&
+			!msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
 			msg.author.id != process.env.LEADERID &&
 			msg.author.id != process.env.DEVID
 		)
