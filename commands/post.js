@@ -9,8 +9,8 @@ module.exports = {
 	description: 'post new cw stats',
 	execute(msg, args, bot) {
 		if (
-			!msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
-			msg.author.id != process.env.LEADERID &&
+			// !msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
+			// msg.author.id != process.env.LEADERID &&
 			msg.author.id != process.env.DEVID
 		)
 			return;
