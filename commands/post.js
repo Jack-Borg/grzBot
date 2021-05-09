@@ -9,8 +9,8 @@ module.exports = {
 	description: 'post new cw stats',
 	execute(msg, args, bot) {
 		if (
-			// !msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
-			// msg.author.id != process.env.LEADERID &&
+			!msg.member.roles.cache.has(process.env.CAPTAINROLE) &&
+			msg.author.id != process.env.LEADERID &&
 			msg.author.id != process.env.DEVID
 		)
 			return;
@@ -21,7 +21,7 @@ module.exports = {
 					var string = new TextDecoder().decode(res);
 
 					try {
-						let report = JSON.parse(string);
+						let report = JSON.parse(JSON.parse(string));
 						report['war'] = parseInt(process.env.CURRENTWAR);
 						dao.postReport(report);
 					} catch (e) {
@@ -31,7 +31,7 @@ module.exports = {
 			});
 		} else {
 			try {
-				let report = JSON.parse(args[0]);
+				let report = JSON.parse(JSON.parse(args[0]));
 				report['war'] = parseInt(process.env.CURRENTWAR);
 				dao.postReport(report);
 			} catch (e) {
@@ -40,7 +40,8 @@ module.exports = {
 		}
 
 		msg.delete({ timeout: 1500 }).then(
-			(e) => e.channel.send(embed({ title: ':email: Post recieved' }))
+			(e) =>
+				e.channel.send(embed({ title: ':email: Post recieved', desc: `By: ${msg.author}` }))
 			// .then((m) => m.delete({ timeout: 10000 }))
 		);
 
