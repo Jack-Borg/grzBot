@@ -43,12 +43,12 @@ module.exports = {
 				console.log('post inline error:', e);
 				return msg.channel.send(embed({ title: ':x: Incorrect input' }));
 			}
-			postRecieved(msg);
+			postRecieved(msg, bot);
 		}
 	},
 };
 
-function postRecieved(msg) {
+function postRecieved(msg, bot) {
 	msg.delete({ timeout: 1500 }).then((e) =>
 		e.channel.send(embed({ title: ':email: Post recieved', desc: `By: ${msg.author}` }))
 	);
