@@ -23,10 +23,9 @@ module.exports = {
 					try {
 						let report = JSON.parse(JSON.parse(string));
 						report['war'] = parseInt(process.env.CURRENTWAR);
-						console.log('str', report);
 						dao.postReport(report);
 
-						postRecieved(msg);
+						postRecieved(msg, bot);
 					} catch (e) {
 						console.log('post attachment error:', e);
 						return msg.channel.send(embed({ title: ':x: Incorrect input' }));
@@ -36,7 +35,6 @@ module.exports = {
 		} else {
 			try {
 				let report = JSON.parse(JSON.parse(args[0]));
-				console.log('arg', report);
 				report['war'] = parseInt(process.env.CURRENTWAR);
 				dao.postReport(report);
 			} catch (e) {
