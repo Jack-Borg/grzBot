@@ -23,8 +23,12 @@ module.exports = {
 					try {
 						let report = JSON.parse(JSON.parse(string));
 						report['war'] = parseInt(process.env.CURRENTWAR);
+						console.log('str', report);
 						dao.postReport(report);
+
+						postRecieved(msg);
 					} catch (e) {
+						console.log('post attachment error:', e);
 						return msg.channel.send(embed({ title: ':x: Incorrect input' }));
 					}
 				});
@@ -32,21 +36,24 @@ module.exports = {
 		} else {
 			try {
 				let report = JSON.parse(JSON.parse(args[0]));
+				console.log('arg', report);
 				report['war'] = parseInt(process.env.CURRENTWAR);
 				dao.postReport(report);
 			} catch (e) {
+				console.log('post inline error:', e);
 				return msg.channel.send(embed({ title: ':x: Incorrect input' }));
 			}
+			postRecieved(msg);
 		}
-
-		msg.delete({ timeout: 1500 }).then(
-			(e) =>
-				e.channel.send(embed({ title: ':email: Post recieved', desc: `By: ${msg.author}` }))
-			// .then((m) => m.delete({ timeout: 10000 }))
-		);
-
-		setTimeout(function () {
-			bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
-		}, 3000);
 	},
 };
+
+function postRecieved(msg) {
+	msg.delete({ timeout: 1500 }).then((e) =>
+		e.channel.send(embed({ title: ':email: Post recieved', desc: `By: ${msg.author}` }))
+	);
+
+	setTimeout(function () {
+		bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
+	}, 3000);
+}
