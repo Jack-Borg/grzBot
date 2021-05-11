@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { getWarReport: getWarReport, getSoldierReport } = require('../dao');
 const { numberFormat, minToHM, embed } = require('../utils');
+const { table } = require('table');
 
 module.exports = {
 	name: 'grz.stats',
@@ -68,7 +69,29 @@ function soldierEmbed(s) {
 		{ name: 'Est. total kills', value: numberFormat(estKills.toFixed(2)), inline: true },
 	];
 
-	return embed({ title: s.name.replace('_', '\\_') + ' in war ' + s.war, fields });
+	return embed({ title: s.name.replaceAll('_', '\\_') + ' in war ' + s.war, fields });
+}
+
+function newClanEmbed(soldiers, warN) {
+	const contractLength = warN <= 3 ? 240 : 180;
+	const totalCount = soldiers.length;
+
+	console.log(soldiers.length);
+	let sTable = [['Name', 'Kills', 'Time Left', 'Est. Kills', 'KPM']];
+	sTable = sTable.concat(
+		soldiers.map((s) => {
+			const tmp = s.last.kills / s.last.minutesSpent;
+			//handle 0/0 == NaN
+			const kpm = isNaN(tmp) ? 0 : tmp;
+			const est = kpm * 180;
+			const time = minToHM(contractLength - s.last.minutesSpent);
+			return [s.name, s.last.kills, time, numberFormat(est), numberFormat(kpm)];
+		})
+	);
+	console.log(sTable);
+	console.log(table(sTable));
+
+	return embed({ title: 'Report: war ' + warN });
 }
 
 function clanEmbed(soldiers, warN) {
@@ -82,16 +105,15 @@ function clanEmbed(soldiers, warN) {
 	let totalKills = 0;
 
 	soldiers.forEach((s) => {
-		names.push(s.name.replace('_', '\\_'));
+		names.push(s.name.replaceAll('_', '\\_'));
 		kills.push(numberFormat(s.last.kills));
 		totalKills += s.last.kills;
-		//handle 0/0 == NaN
 		const tmp = s.last.kills / s.last.minutesSpent;
+		//handle 0/0 == NaN
 		kpm.push(isNaN(tmp) ? 0 : tmp);
 		time.push(minToHM(contractLength - s.last.minutesSpent));
 		if (s.last.minutesSpent < contractLength) activeCount++;
 	});
-
 	const avgKPM = kpm.reduce((p, c) => p + c) / kpm.length;
 	const avgEstKills = avgKPM * contractLength;
 
