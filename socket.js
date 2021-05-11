@@ -50,7 +50,7 @@ socket.onclose = function (event) {
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
-	console.log('In:', data);
+	// console.log('In:', data);
 	switch (data[0]) {
 		case 'pi':
 			sendData(['po']);
