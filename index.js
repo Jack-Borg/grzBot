@@ -3,8 +3,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
-
-const cron = require('cron');
+const socket = require('./socket.js');
 
 Object.keys(botCommands).map((key) => {
 	bot.commands.set(botCommands[key].name, botCommands[key]);
@@ -33,16 +32,17 @@ bot.on('message', (msg) => {
 	if (!bot.commands.has(command) || msg.channel.type == 'dm') return;
 
 	try {
-		bot.commands.get(command).execute(msg, args, bot);
+		bot.commands.get(command).execute(msg, args, bot, socket);
 	} catch (error) {
 		console.error(error);
 		msg.reply('there was an error trying to execute that command!');
 	}
 });
 
-new cron.CronJob('1 */30 * * * *', () => {
-	// scrape().then((res) =>
-	// 	dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
-	// );
-	bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
-})//.start();
+// const cron = require('cron');
+// new cron.CronJob('1 */30 * * * *', () => {
+// scrape().then((res) =>
+// 	dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
+// );
+// 	bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
+// }).start();

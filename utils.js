@@ -9,7 +9,17 @@ module.exports = {
 		const m = mins % 60;
 		return `${h}H ${m}M`;
 	},
-	embed: function ({ title, desc, fields, stamp }) {
+	msToDHM: function (millis) {
+		let m = millis / 60000;
+		let h = m / 60;
+		let d = Math.floor(h / 24);
+
+		m = Math.floor(m % 60);
+		h = Math.floor(h % 24);
+
+		return `${d > 0 ? d + 'd' : ''} ${h}h ${m}m`;
+	},
+	embed: function ({ title, desc, fields, stamp = false }) {
 		const embed = new Discord.MessageEmbed().setColor('#ffc800');
 
 		if (title) embed.setTitle(title);

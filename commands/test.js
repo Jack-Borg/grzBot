@@ -7,12 +7,6 @@ module.exports = {
 	execute(msg, args, bot) {
 		if (msg.author.id !== process.env.DEVID) return;
 
-		if (msg.attachments.first()) {
-			console.log('att');
-		} else {
-			console.log('no att');
-		}
-
 		// msg.reply(new Discord.MessageEmbed().setTitle(':email: you got mail').setColor('#ffc800'));
 		// console.log(msg.guild.channels.cache.map((role) => role.name + ': ' + role.id));
 
