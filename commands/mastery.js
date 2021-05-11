@@ -38,12 +38,12 @@ module.exports = {
 			Trigger Mastery \`${DoneOrFormat((pf.class(0) / lvl100) * 100)}\`
 			Vandal \`${DoneOrFormat((pf.sprays() / 50000) * 100)}\`
 			High Roller \`${DoneOrFormat((pf.kr() / 1000000) * 100)}\`
-			Master Trader \`${'???'}\`
 			Crossbow Mastery \`${DoneOrFormat((pf.class(11) / lvl100) * 100)}\`
 			Shotgun Mastery \`${DoneOrFormat((pf.class(4) / lvl100) * 100)}\`
 			Killa \`${DoneOrFormat((pf.kills() / 50000) * 100)}\`
 			Agent Mastery \`${DoneOrFormat((pf.class(8) / lvl100) * 100)}\`
             `;
+			// Master Trader \`${'???'}\`
 
 			msg.channel.send(embed({ title: 'Mastery', desc }));
 		} catch (e) {

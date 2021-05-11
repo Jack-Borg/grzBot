@@ -27,6 +27,15 @@ module.exports = {
 			});
 		}
 
+		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
+			const mCommands = ['grz.pf <kr-username>', 'grz.mastery <kr-username>'];
+			fields.push({
+				name: 'Member Commands',
+				value: `>>> \`\`\`css\n${mCommands.join('\n')} \`\`\``,
+				inline: false,
+			});
+		}
+
 		const df = ['grz.xp <current lvl> <targetlvl> [current xp]'];
 		fields.push({
 			name: 'Public Commands',

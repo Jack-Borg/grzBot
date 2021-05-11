@@ -20,6 +20,7 @@ module.exports = {
 
 			env[target] = env[target].split('=')[0] + '=' + value;
 
+			process.env.CURRENTWAR = value;
 			fs.writeFile('./.env', env.join('\n'), function (err) {
 				if (err) return console.log(err);
 				msg.channel.send('Current war changed to ' + value);
