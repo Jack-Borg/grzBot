@@ -23,6 +23,7 @@
 		"puppeteer-extra-plugin-adblocker": "^2.11.10",
 		"puppeteer-extra-plugin-stealth": "^2.7.5",
 		"rsvp": "^4.8.5",
-		"sqlite3": "^5.0.0"
+		"table": "^6.7.0",
+		"ws": "^7.4.2"
 	}
 }
