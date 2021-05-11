@@ -14,7 +14,7 @@ var token = '';
 var website = {
 	sitekey: '60a46f6a-e214-4aa8-b4df-4386e68dfde4',
 	url: 'krunker.io',
-	port: 80,
+	port: 8080,
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -8,7 +8,7 @@ module.exports = {
 	description: 'mastery calculator',
 	async execute(msg, args, bot, socket) {
 		if (
-			msg.author.id !== process.env.DEVID ||
+			msg.author.id !== process.env.DEVID &&
 			!msg.member.roles.cache.has(process.env.MEMBERROLE)
 		)
 			return;

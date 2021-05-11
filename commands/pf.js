@@ -8,7 +8,11 @@ module.exports = {
 	name: 'grz.pf',
 	description: 'Profile command',
 	async execute(msg, args, bot, socket) {
-		if (!msg.member.roles.cache.has(process.env.MEMBERROLE)) return;
+		if (
+			msg.author.id !== process.env.DEVID &&
+			!msg.member.roles.cache.has(process.env.MEMBERROLE)
+		)
+			return;
 
 		if (args.length == 0) {
 			return msg.channel.send(
