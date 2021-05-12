@@ -37,10 +37,10 @@ const socket = new WebSocket('wss://social.krunker.io/ws', {
 	headers: { origin: 'https://krunker.io/' },
 });
 socket.binaryType = 'arraybuffer';
-socket.onopen = () => {
-	console.log('Socket connection open');
-	connected = true;
-};
+
+// socket.onopen = () => {
+// };
+
 socket.onerror = function (error) {
 	console.error('Websocket error: ', error);
 };
@@ -50,6 +50,7 @@ socket.onclose = function (event) {
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
+
 	// console.log('In:', data);
 	switch (data[0]) {
 		case 'pi':
@@ -63,6 +64,10 @@ socket.onmessage = (event) => {
 			profilePackage = data;
 			break;
 		case 'pir':
+			if (!connected) {
+				console.log('Socket connection open');
+				connected = true;
+			}
 			captchaPassed = true;
 			break;
 	}
@@ -99,6 +104,38 @@ module.exports = {
 			}, 200);
 			setTimeout(() => {
 				reject(new Error('Profile Timeout'));
+				clearInterval(interval);
+			}, 2000);
+		});
+	},
+	clan(name) {
+		return new Promise(function (resolve, reject) {
+			sendData(['r', 'clan', name, null]);
+			console.log('Requesting Clan: ', name);
+			var interval = setInterval(function () {
+				if (profilePackage[2] === name) {
+					clearInterval(interval);
+					resolve(profilePackage);
+				}
+			}, 200);
+			setTimeout(() => {
+				reject(new Error('Clan Timeout'));
+				clearInterval(interval);
+			}, 2000);
+		});
+	},
+	cw() {
+		return new Promise(function (resolve, reject) {
+			sendData(['r', 'clanwars', null, null]);
+			console.log('Requesting CW');
+			var interval = setInterval(function () {
+				if (profilePackage[1] === 'clanwars') {
+					clearInterval(interval);
+					resolve(profilePackage);
+				}
+			}, 200);
+			setTimeout(() => {
+				reject(new Error('CW Timeout'));
 				clearInterval(interval);
 			}, 2000);
 		});
