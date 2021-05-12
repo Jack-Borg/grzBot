@@ -9,6 +9,7 @@ module.exports = {
 	Mastery: require('./mastery'),
 	Roles: require('./roles'),
 	Pf: require('./pf'),
+	kpm: require('./kpm'),
 	// Apply: require('./apply'),
 	// Archive: require('./archive'),
 	// Top: require('./top'),
