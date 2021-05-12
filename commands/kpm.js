@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed } = require('../utils');
+const { embed, numberFormat } = require('../utils');
 
 module.exports = {
 	name: 'grz.kpm',
@@ -13,7 +13,7 @@ module.exports = {
 		msg.channel.send(
 			embed({
 				title: 'Estimate kills calc',
-				desc: `With \`${kpm}\` KPM you can get \`${kpm * 180}\` total kills`,
+				desc: `With \`${kpm}\` KPM you can get \`${numberFormat(kpm * 180)}\` total kills`,
 			})
 		);
 	},
