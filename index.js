@@ -46,3 +46,14 @@ bot.on('message', (msg) => {
 // );
 // 	bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
 // }).start();
+
+const cron = require('cron');
+new cron.CronJob('1 */20 * * * *', async () => {
+	try {
+		await socket.connected();
+		const names = ['jack_borg', 'grizzly66', 'supermac', 'crafterl'];
+		socket.profile(names[Math.floor(Math.random() * names.length)]);
+	} catch (e) {
+		console.error('e', e);
+	}
+}).start();

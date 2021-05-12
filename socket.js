@@ -47,10 +47,6 @@ socket.onerror = function (error) {
 socket.onclose = function (event) {
 	console.log('Socket connection closed');
 	connected = false;
-	socket = new WebSocket('wss://social.krunker.io/ws', {
-		headers: { origin: 'https://krunker.io/' },
-	});
-	socket.binaryType = 'arraybuffer';
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
