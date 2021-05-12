@@ -10,6 +10,7 @@ module.exports = {
 	Roles: require('./roles'),
 	Pf: require('./pf'),
 	kpm: require('./kpm'),
+	Wars: require('./wars'),
 	// Apply: require('./apply'),
 	// Archive: require('./archive'),
 	// Top: require('./top'),

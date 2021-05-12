@@ -50,7 +50,7 @@ module.exports = {
 			console.error('e', e);
 			bot.users.cache
 				.find((user) => user.id === process.env.DEVID)
-				.send(embed({ title: 'mastery error' }));
+				.send(embed({ title: 'mastery error', desc: 'pf: ' + args.join(' ') }));
 			msg.reply(embed({ title: ':x: Unable to get profile' }));
 		}
 	},
