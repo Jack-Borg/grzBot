@@ -59,12 +59,6 @@ module.exports = {
 };
 
 function createTable(contract) {
-	const kpm =
-		contract.kills() /
-		(contract.timePlayed() / 60000 < 180 ? contract.timePlayed() / 60000 : 180);
-	const kpg = kpm * 4;
-	const estKills = kpm * 60 * 3;
-	const kd = contract.kills() / contract.deaths();
 	return [
 		['Name', 'Value'],
 		[
@@ -83,6 +77,16 @@ function createTable(contract) {
 				'\n' +
 				numberFormat(kd),
 		],
+		[
+		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
+			numberFormat(contract.kills())+'\n'+
+			msToDHM(contract.timePlayed())+'\n'+
+			numberFormat(contract.kpm())+'\n'+
+			numberFormat(contract.kpg())+'\n'+
+			numberFormat(contract.estKills())+'\n\n'+
+			numberFormat(contract.deaths())+'\n'+
+			numberFormat(contract.kd())
+		]
 	];
 }
 
