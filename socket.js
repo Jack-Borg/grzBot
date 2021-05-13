@@ -32,10 +32,13 @@ app.post('/', function (request, response) {
 	console.log('Submitting captcha token...');
 	socket.send(Buffer.from([...msgpack.encode(['cptR', token]), 0, 0]));
 });
-
-let socket = new WebSocket('wss://social.krunker.io/ws', {
-	headers: { origin: 'https://krunker.io/' },
-});
+var socket;
+function connect() {
+	socket = new WebSocket('wss://social.krunker.io/ws', {
+		headers: { origin: 'https://krunker.io/' },
+    });
+}
+connect();
 socket.binaryType = 'arraybuffer';
 
 // socket.onopen = () => {
@@ -47,6 +50,7 @@ socket.onerror = function (error) {
 socket.onclose = function (event) {
 	console.log('Socket connection closed');
 	connected = false;
+	setTimeout(connect, 60*1000); //reconnect after 60sec
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
@@ -144,10 +148,3 @@ module.exports = {
 		return profile[3]['player_' + state];
 	},
 };
-
-/*
-this.updateLevel = function() {
-    var e = n.rankVar * Math.sqrt(this.score);
-    this.level = Math.floor(e), this.levelProg = Math.round(100 * (e - this.level)), this.level = Math.max(1, this.level)
-}
-*/
