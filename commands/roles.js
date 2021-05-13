@@ -1,7 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed } = require('../utils');
-const profile = require('../profile');
+const { embed } = require('../utils/utils');
+const profile = require('../utils/classes/profile');
 
 module.exports = {
 	name: process.env.PREFIX+'.roles',
