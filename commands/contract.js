@@ -10,7 +10,7 @@ module.exports = {
 	async execute(msg, args, bot, socket) {
 		if (
 			msg.author.id !== process.env.DEVID &&
-			!msg.member.roles.cache.has(process.env.MEMBERROLE)
+			!msg.member.roles.cache.has(process.env.CAPTAINROLE)
 		)
 			return;
 
