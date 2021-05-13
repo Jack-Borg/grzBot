@@ -29,7 +29,7 @@ module.exports = {
 			const data = await socket.clan('grz');
 			var playerIndex;
 			for (var i = 0; i < data[3].members.length; i++) {
-				if (data[3].members[i].p === playerName) {
+				if (data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
 					playerIndex = i;
 					break;
 				}
