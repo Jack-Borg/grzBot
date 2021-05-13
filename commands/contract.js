@@ -28,15 +28,9 @@ module.exports = {
 			const playerName = args.join(' ');
 			const data = await socket.clan('grz');
 			var playerIndex;
-<<<<<<< HEAD
-			for(var i=0;i<data[3].members.length;i++) {
-				if(data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
-					playerIndex=i;
-=======
 			for (var i = 0; i < data[3].members.length; i++) {
 				if (data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
 					playerIndex = i;
->>>>>>> b8244dca968c4db6bb7ba54271c0c0846bd38ded
 					break;
 				}
 			}
@@ -63,15 +57,6 @@ module.exports = {
 };
 
 function createTable(contract) {
-<<<<<<< HEAD
-=======
-	const kpm =
-		contract.kills() /
-		(contract.timePlayed() / 60000 < 180 ? contract.timePlayed() / 60000 : 180);
-	const kpg = kpm * 4;
-	const estKills = kpm * 60 * 3;
-	const kd = contract.kills() / contract.deaths();
->>>>>>> b8244dca968c4db6bb7ba54271c0c0846bd38ded
 	return [
 		['Name', 'Value'],
 		[
@@ -90,7 +75,6 @@ function createTable(contract) {
 				'\n' +
 				numberFormat(kd),
 		],
-<<<<<<< HEAD
 		[
 		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
 			numberFormat(contract.kills())+'\n'+
@@ -101,7 +85,5 @@ function createTable(contract) {
 			numberFormat(contract.deaths())+'\n'+
 			numberFormat(contract.kd())
 		]
-=======
->>>>>>> b8244dca968c4db6bb7ba54271c0c0846bd38ded
 	];
 }
