@@ -1,8 +1,8 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, msToDHM, numberFormat } = require('../utils');
+const { embed, msToDHM, numberFormat } = require('../utils/utils');
 const table = require('table');
-const profile = require('../profile');
+const profile = require('../utils/classes/profile');
 
 module.exports = {
 	name: process.env.PREFIX+'.pf',

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed } = require('../utils');
+const { embed } = require('../utils/utils');
 
 module.exports = {
 	name: process.env.PREFIX+'.help',

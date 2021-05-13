@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, numberFormat, minToHM } = require('../utils');
+const { embed, numberFormat, minToHM } = require('../utils/utils');
 const table = require('table');
 
 module.exports = {

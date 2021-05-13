@@ -1,8 +1,8 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
-const { embed } = require('../utils');
-const dao = require('../dao');
+const { embed } = require('../utils/utils');
+const dao = require('../utils/dao');
 
 module.exports = {
 	name: process.env.PREFIX+'.post',

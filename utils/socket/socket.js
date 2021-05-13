@@ -156,8 +156,5 @@ module.exports = {
 				clearInterval(interval);
 			}, 2000);
 		});
-	},
-	get(profile, state) {
-		return profile[3]['player_' + state];
-	},
+	}
 };

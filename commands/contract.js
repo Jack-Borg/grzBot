@@ -2,7 +2,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const { embed, msToDHM, numberFormat } = require('../utils/utils');
 const table = require('table');
-const profile = require('../utils/classes/profile');
+const contractStats = require('../utils/classes/contractStats');
 
 module.exports = {
 	name: process.env.PREFIX+'.contract',
@@ -26,17 +26,28 @@ module.exports = {
 		try {
 			await socket.connected();
             const playerName = args.join(' ');
-            console.log(playerName);
-			const data = await socket.clan("GrZ");
-			console.log(data)
+			const data = await socket.clan("grz");
+			var playerIndex;
+			for(var i=0;i<data[3].members.length;i++) {
+				if(data[3].members[i].p === playerName) {
+					playerIndex=i;
+					break;
+				}
+			}
+			if(playerIndex == null) {
+				msg.reply(embed({ title: ':x: Player is probably not in GrZ' }));
+			}
+			else {
 
-			const TableData = createTable();
-			const TableConfig = {
-				border: table.getBorderCharacters(`ramac`),
-			};
+				contract = new contractStats(data, playerIndex);
 
-			const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
-			msg.reply(embed({ title: "test"/*pf.name()*/, desc }));
+				const TableData = createTable(contract);
+				const TableConfig = {
+					border: table.getBorderCharacters(`ramac`),
+				};
+				const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
+				msg.reply(embed({ title: contract.name(), desc }));
+			}
 		} catch (e) {
 			console.error('e', e);
 			bot.users.cache
@@ -47,45 +58,25 @@ module.exports = {
 	},
 };
 
-function createTable(pf) {
-    return [['test'],[4]]
-    /*
+function createTable(contract) {
+	const kpm = contract.kills() / ((contract.timePlayed()/60000)<180 ? (contract.timePlayed()/60000) : 180);
+	const kpg = kpm*4;
+	const estKills = kpm * 60 * 3;
+	const kd = contract.kills()/contract.deaths()
 	return [
 		[
-			'LVL\n' + pf.lvl(),
-			'Challenge\n' + pf.challenge(),
-			'KR\n' + numberFormat(pf.kr()),
-			'Score\n' + numberFormat(pf.score()),
+			'Name',
+			'Value',
 		],
 		[
-			'SPK\n' + numberFormat(pf.spk()),
-			'Kills\n' + numberFormat(pf.kills()),
-			'Deaths\n' + numberFormat(pf.deaths()),
-			'KDR\n' + numberFormat(pf.kd()),
-		],
-		[
-			'KPG\n' + numberFormat(pf.kpg()),
-			'Games\n' + numberFormat(pf.games()),
-			'W/L\n' + numberFormat(pf.wl()),
-			'Wins\n' + numberFormat(pf.wins()),
-		],
-		[
-			'Losses\n' + numberFormat(pf.losses()),
-			'Assists\n' + numberFormat(pf.assists()),
-			'Nukes\n' + numberFormat(pf.nukes()),
-			'KR-Packages\n' + numberFormat(pf.kr_packages()),
-		],
-		[
-			'Melee\n' + numberFormat(pf.melee()),
-			'Beatdowns\n' + numberFormat(pf.beatdowns()),
-			'Bullseyes\n' + numberFormat(pf.bullseyes()),
-			'Headshots\n' + numberFormat(pf.headshots()),
-		],
-		[
-			'Wallbangs\n' + numberFormat(pf.wallbangs()),
-			'Sprays Placed\n' + numberFormat(pf.sprays()),
-			'Accuracy\n' + numberFormat(pf.accuracy()) + '%',
-			'Time Played\n' + msToDHM(pf.timeplayed()),
-		],
-	];*/
+		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
+			numberFormat(contract.kills())+'\n'+
+			msToDHM(contract.timePlayed())+'\n'+
+			numberFormat(kpm)+'\n'+
+			numberFormat(kpg)+'\n'+
+			numberFormat(estKills)+'\n\n'+
+			numberFormat(contract.deaths())+'\n'+
+			numberFormat(kd)
+		]
+	];
 }

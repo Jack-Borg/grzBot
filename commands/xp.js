@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { embed, numberFormat } = require('../utils');
+const { embed, numberFormat } = require('../utils/utils');
 
 module.exports = {
 	name: process.env.PREFIX+'.xp',

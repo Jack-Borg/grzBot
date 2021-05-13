@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, numberFormat } = require('../utils');
+const { embed, numberFormat } = require('../utils/utils');
 
 module.exports = {
 	name: process.env.PREFIX+'.kpm',

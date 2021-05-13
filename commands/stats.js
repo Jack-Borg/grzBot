@@ -1,6 +1,6 @@
 require('dotenv').config();
-const { getWarReport: getWarReport, getSoldierReport } = require('../dao');
-const { numberFormat, minToHM, embed } = require('../utils');
+const { getWarReport: getWarReport, getSoldierReport } = require('../utils/dao');
+const { numberFormat, minToHM, embed } = require('../utils/utils');
 const { table } = require('table');
 
 module.exports = {
