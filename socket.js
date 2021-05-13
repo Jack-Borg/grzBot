@@ -16,7 +16,6 @@ var website = {
 	url: 'krunker.io',
 	port: 8080,
 };
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.listen(website.port, () => console.log('Listening on port ' + website.port));
 app.get('/', function (req, res) {
@@ -28,15 +27,29 @@ app.get('/', function (req, res) {
 });
 app.post('/', function (request, response) {
 	token = request.body['h-captcha-response'];
-	response.send(HtmlNoCaptcha);
+	response.send(html.noCaptcha());
 	console.log('Submitting captcha token...');
 	socket.send(Buffer.from([...msgpack.encode(['cptR', token]), 0, 0]));
 });
 var socket;
 function connect() {
-	socket = new WebSocket('wss://social.krunker.io/ws', {
-		headers: { origin: 'https://krunker.io/' },
-    });
+	try{
+		socket = new WebSocket('wss://social.krunker.io/ws', {
+			headers: { origin: 'https://krunker.io/' }
+		});
+	}
+	catch(e) {
+		console.log('e ' + e)
+	}
+}
+function reconnect() {
+	var interval = setInterval(function () {
+		connect();
+		console.log("Trying to connect to the socket...")
+		if (connected) {
+			clearInterval(interval);
+		}
+	}, 5000);
 }
 connect();
 socket.binaryType = 'arraybuffer';
@@ -50,7 +63,7 @@ socket.onerror = function (error) {
 socket.onclose = function (event) {
 	console.log('Socket connection closed');
 	connected = false;
-	setTimeout(connect, 60*1000); //reconnect after 60sec
+	reconnect();
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
