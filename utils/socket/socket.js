@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const html = require('./html');
 
-var profilePackage = '';
+var dataPackage = '';
 var connected = false;
 var captchaPassed = false;
 var token = '';
@@ -78,7 +78,7 @@ socket.onmessage = (event) => {
 			captchaPassed = false;
 			break;
 		case '0':
-			profilePackage = data;
+			dataPackage = data;
 			break;
 		case 'pir':
 			if (!connected) {
@@ -114,9 +114,9 @@ module.exports = {
 			sendData(['r', 'profile', name, null]);
 			console.log('Requesting Profile from: ', name);
 			var interval = setInterval(function () {
-				if (profilePackage[2] === name) {
+				if (dataPackage[2] === name) {
 					clearInterval(interval);
-					resolve(profilePackage);
+					resolve(dataPackage);
 				}
 			}, 200);
 			setTimeout(() => {
@@ -130,9 +130,9 @@ module.exports = {
 			sendData(['r', 'clan', name, null]);
 			console.log('Requesting Clan: ', name);
 			var interval = setInterval(function () {
-				if (profilePackage[2] === name) {
+				if (dataPackage[2] === name) {
 					clearInterval(interval);
-					resolve(profilePackage);
+					resolve(dataPackage);
 				}
 			}, 200);
 			setTimeout(() => {
@@ -146,9 +146,9 @@ module.exports = {
 			sendData(['r', 'clanwars', null, null]);
 			console.log('Requesting CW');
 			var interval = setInterval(function () {
-				if (profilePackage[1] === 'clanwars') {
+				if (dataPackage[1] === 'clanwars') {
 					clearInterval(interval);
-					resolve(profilePackage);
+					resolve(dataPackage);
 				}
 			}, 200);
 			setTimeout(() => {

@@ -1,12 +1,12 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, msToDHM, numberFormat } = require('../utils');
+const { embed, msToDHM, numberFormat } = require('../utils/utils');
 const table = require('table');
-const profile = require('../profile');
+const profile = require('../utils/classes/profile');
 
 module.exports = {
-	name: process.env.PREFIX+'.pf',
-	description: 'Profile command',
+	name: process.env.PREFIX+'.contract',
+	description: 'Contract command',
 	async execute(msg, args, bot, socket) {
 		if (
 			msg.author.id !== process.env.DEVID &&
@@ -18,34 +18,38 @@ module.exports = {
 			return msg.channel.send(
 				embed({
 					title: ':x: Missing arguments',
-					desc: process.env.PREFIX+`.pf \`<Player>\` `,
+					desc: process.env.PREFIX+`.contract \`<Player>\` `,
 				})
 			);
 		}
 
 		try {
 			await socket.connected();
-			const data = await socket.profile(args.join(' '));
-			const pf = new profile(data);
+            const playerName = args.join(' ');
+            console.log(playerName);
+			const data = await socket.clan("GrZ");
+			console.log(data)
 
-			const TableData = createTable(pf);
+			const TableData = createTable();
 			const TableConfig = {
 				border: table.getBorderCharacters(`ramac`),
 			};
 
 			const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
-			msg.reply(embed({ title: pf.name(), desc }));
+			msg.reply(embed({ title: "test"/*pf.name()*/, desc }));
 		} catch (e) {
 			console.error('e', e);
 			bot.users.cache
 				.find((user) => user.id === process.env.DEVID)
-				.send(embed({ title: 'pf error', desc: 'pf: ' + args.join(' ') }));
-			msg.reply(embed({ title: ':x: Unable to get profile' }));
+				.send(embed({ title: 'contract error', desc: 'contract: ' + args.join(' ') }));
+			msg.reply(embed({ title: ':x: Unable to get contract' }));
 		}
 	},
 };
 
 function createTable(pf) {
+    return [['test'],[4]]
+    /*
 	return [
 		[
 			'LVL\n' + pf.lvl(),
@@ -83,5 +87,5 @@ function createTable(pf) {
 			'Accuracy\n' + numberFormat(pf.accuracy()) + '%',
 			'Time Played\n' + msToDHM(pf.timeplayed()),
 		],
-	];
+	];*/
 }

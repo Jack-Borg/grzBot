@@ -11,6 +11,7 @@ module.exports = {
 	Pf: require('./pf'),
 	kpm: require('./kpm'),
 	Wars: require('./wars'),
+	Contract: require('./contract'),
 	// Apply: require('./apply'),
 	// Archive: require('./archive'),
 	// Top: require('./top'),
