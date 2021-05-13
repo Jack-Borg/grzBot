@@ -2,7 +2,7 @@ require('dotenv').config();
 const { embed, numberFormat } = require('../utils');
 
 module.exports = {
-	name: 'grz.xp',
+	name: process.env.PREFIX+'.xp',
 	description: 'class xp',
 	execute(msg, args, bot) {
 		if (args.length <= 1)

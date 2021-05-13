@@ -4,7 +4,7 @@ const { embed, numberFormat } = require('../utils');
 const profile = require('../profile');
 
 module.exports = {
-	name: 'grz.mastery',
+	name: process.env.PREFIX+'.mastery',
 	description: 'mastery calculator',
 	async execute(msg, args, bot, socket) {
 		if (

@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 
 module.exports = {
-	name: 'grz.warnum',
+	name: process.env.PREFIX+'.warnum',
 	description: 'Dev cmd to change war number',
 	execute(msg, args, bot) {
 		if (msg.author.id !== process.env.DEVID) return;

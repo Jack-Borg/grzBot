@@ -2,7 +2,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 
 module.exports = {
-	name: 'grz.test',
+	name: process.env.PREFIX+'.test',
 	description: 'testing cmd',
 	execute(msg, args, bot) {
 		if (msg.author.id !== process.env.DEVID) return;

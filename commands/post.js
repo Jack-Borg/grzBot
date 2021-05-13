@@ -5,7 +5,7 @@ const { embed } = require('../utils');
 const dao = require('../dao');
 
 module.exports = {
-	name: 'grz.post',
+	name: process.env.PREFIX+'.post',
 	description: 'post new cw stats',
 	execute(msg, args, bot) {
 		if (

@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const { embed } = require('../utils');
 
 module.exports = {
-	name: 'grz.help',
+	name: process.env.PREFIX+'.help',
 	description: 'help cmd',
 	execute(msg, args, bot) {
 		msg.reply(embed({ title: ':email: you got mail' }));
