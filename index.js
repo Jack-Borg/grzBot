@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
-const socket = require('./utils/socket/socket');
+let socket = require('./utils/socket/socket');
 
 Object.keys(botCommands).map((key) => {
 	bot.commands.set(botCommands[key].name, botCommands[key]);
@@ -13,7 +13,7 @@ bot.login(process.env.TOKEN);
 
 bot.on('ready', () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
-	bot.user.setActivity(process.env.PREFIX+'.help', {
+	bot.user.setActivity(process.env.PREFIX + '.help', {
 		type: 'LISTENING',
 	});
 });

@@ -53,9 +53,6 @@ function reconnect() {
 connect();
 socket.binaryType = 'arraybuffer';
 
-// socket.onopen = () => {
-// };
-
 socket.onerror = function (error) {
 	console.error('Websocket error: ', error);
 };
