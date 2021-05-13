@@ -5,7 +5,7 @@ const table = require('table');
 const profile = require('../utils/classes/profile');
 
 module.exports = {
-	name: process.env.PREFIX+'.pf',
+	name: process.env.PREFIX + '.pf',
 	description: 'Profile command',
 	async execute(msg, args, bot, socket) {
 		if (
@@ -18,7 +18,7 @@ module.exports = {
 			return msg.channel.send(
 				embed({
 					title: ':x: Missing arguments',
-					desc: process.env.PREFIX+`.pf \`<Player>\` `,
+					desc: process.env.PREFIX + `.pf \`<Player>\` `,
 				})
 			);
 		}

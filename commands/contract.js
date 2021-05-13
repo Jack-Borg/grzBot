@@ -5,7 +5,7 @@ const table = require('table');
 const contractStats = require('../utils/classes/contractStats');
 
 module.exports = {
-	name: process.env.PREFIX+'.contract',
+	name: process.env.PREFIX + '.contract',
 	description: 'Contract command',
 	async execute(msg, args, bot, socket) {
 		if (
@@ -18,27 +18,31 @@ module.exports = {
 			return msg.channel.send(
 				embed({
 					title: ':x: Missing arguments',
-					desc: process.env.PREFIX+`.contract \`<Player>\` `,
+					desc: process.env.PREFIX + `.contract \`<Player>\` `,
 				})
 			);
 		}
 
 		try {
 			await socket.connected();
-            const playerName = args.join(' ');
-			const data = await socket.clan("grz");
+			const playerName = args.join(' ');
+			const data = await socket.clan('grz');
 			var playerIndex;
+<<<<<<< HEAD
 			for(var i=0;i<data[3].members.length;i++) {
 				if(data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
 					playerIndex=i;
+=======
+			for (var i = 0; i < data[3].members.length; i++) {
+				if (data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
+					playerIndex = i;
+>>>>>>> b8244dca968c4db6bb7ba54271c0c0846bd38ded
 					break;
 				}
 			}
-			if(playerIndex == null) {
+			if (playerIndex == null) {
 				msg.reply(embed({ title: ':x: Player is probably not in GrZ' }));
-			}
-			else {
-
+			} else {
 				contract = new contractStats(data, playerIndex);
 
 				const TableData = createTable(contract);
@@ -59,11 +63,34 @@ module.exports = {
 };
 
 function createTable(contract) {
+<<<<<<< HEAD
+=======
+	const kpm =
+		contract.kills() /
+		(contract.timePlayed() / 60000 < 180 ? contract.timePlayed() / 60000 : 180);
+	const kpg = kpm * 4;
+	const estKills = kpm * 60 * 3;
+	const kd = contract.kills() / contract.deaths();
+>>>>>>> b8244dca968c4db6bb7ba54271c0c0846bd38ded
 	return [
+		['Name', 'Value'],
 		[
-			'Name',
-			'Value',
+			'[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
+			numberFormat(contract.kills()) +
+				'\n' +
+				msToDHM(contract.timePlayed()) +
+				'\n' +
+				numberFormat(kpm) +
+				'\n' +
+				numberFormat(kpg) +
+				'\n' +
+				numberFormat(estKills) +
+				'\n\n' +
+				numberFormat(contract.deaths()) +
+				'\n' +
+				numberFormat(kd),
 		],
+<<<<<<< HEAD
 		[
 		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
 			numberFormat(contract.kills())+'\n'+
@@ -74,5 +101,7 @@ function createTable(contract) {
 			numberFormat(contract.deaths())+'\n'+
 			numberFormat(contract.kd())
 		]
+=======
+>>>>>>> b8244dca968c4db6bb7ba54271c0c0846bd38ded
 	];
 }

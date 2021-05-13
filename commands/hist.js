@@ -3,7 +3,7 @@ const { getSoldierHistory: newGetSoldierReport } = require('../utils/dao');
 const { numberFormat, minToHM, embed } = require('../utils/utils');
 
 module.exports = {
-	name: process.env.PREFIX+'.hist',
+	name: process.env.PREFIX + '.hist',
 	description: 'history cmd',
 	execute(msg, args, bot) {
 		if (

@@ -4,7 +4,7 @@ const { numberFormat, minToHM, embed } = require('../utils/utils');
 const { table } = require('table');
 
 module.exports = {
-	name: process.env.PREFIX+'.stats',
+	name: process.env.PREFIX + '.stats',
 	description: 'Clan War Stats',
 	execute(msg, args, bot) {
 		if (

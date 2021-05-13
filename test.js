@@ -1,40 +1,40 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //top soldiers 5 war program
-// const { getAllWarReport } = require('./dao');
+const { getAllWarReport } = require('./dao');
 
-// getAllWarReport().then((soldiers) => {
-// 	let tmp = {};
+getAllWarReport().then((soldiers) => {
+	let tmp = {};
 
-// 	soldiers.forEach((s) => {
-// 		if (tmp[s.name]) return tmp[s.name].push({ war: s.war, score: s.last });
-// 		tmp[s.name] = [{ war: s.war, score: s.last }];
-// 	});
-// 	// console.log(tmp);
+	soldiers.forEach((s) => {
+		if (tmp[s.name]) return tmp[s.name].push({ war: s.war, score: s.last });
+		tmp[s.name] = [{ war: s.war, score: s.last }];
+	});
+	// console.log(tmp);
 
-// 	scores = [];
-// 	for (const k in tmp) {
-// 		const sol = tmp[k];
-// 		let kills;
-// 		if (sol.length > 1) {
-// 			kills = sol
-// 				.map((s) => {
-// 					if (s.war == 3) return 0;
-// 					return s.score.kills;
-// 				})
-// 				.reduce((a, b) => a + b);
-// 			// console.log(kills);
-// 		} else {
-// 			kills = sol[0].score.kills;
-// 		}
+	scores = [];
+	for (const k in tmp) {
+		const sol = tmp[k];
+		let kills;
+		if (sol.length > 1) {
+			kills = sol
+				.map((s) => {
+					if (s.war == 3) return 0;
+					return s.score.kills;
+				})
+				.reduce((a, b) => a + b);
+			// console.log(kills);
+		} else {
+			kills = sol[0].score.kills;
+		}
 
-// 		scores.push({
-// 			name: k,
-// 			kills,
-// 		});
-// 	}
+		scores.push({
+			name: k,
+			kills,
+		});
+	}
 
-// 	console.log(scores.sort((a, b) => b.kills - a.kills).slice(0, 10));
-// });
+	console.log(scores.sort((a, b) => b.kills - a.kills).slice(0, 20));
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 

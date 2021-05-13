@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const { embed } = require('../utils/utils');
 
 module.exports = {
-	name: process.env.PREFIX+'.help',
+	name: process.env.PREFIX + '.help',
 	description: 'help cmd',
 	execute(msg, args, bot) {
 		msg.reply(embed({ title: ':email: You got a mail' }));
@@ -15,10 +15,10 @@ module.exports = {
 			msg.author.id == process.env.LEADERID
 		) {
 			const cwf = [
-				process.env.PREFIX+'.stats [War number]',
-				process.env.PREFIX+'.stats <kr-username> [War number]',
-				process.env.PREFIX+'.hist <kr-username>',
-				process.env.PREFIX+'.post <Post data>',
+				process.env.PREFIX + '.stats [War number]',
+				process.env.PREFIX + '.stats <kr-username> [War number]',
+				process.env.PREFIX + '.hist <kr-username>',
+				process.env.PREFIX + '.post <Post data>',
 			];
 			fields.push({
 				name: 'Clan War Commands',
@@ -28,7 +28,10 @@ module.exports = {
 		}
 
 		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
-			const mCommands = [process.env.PREFIX+'.pf <kr-username>', process.env.PREFIX+'.mastery <kr-username>'];
+			const mCommands = [
+				process.env.PREFIX + '.pf <kr-username>',
+				process.env.PREFIX + '.mastery <kr-username>',
+			];
 			fields.push({
 				name: 'Member Commands',
 				value: `>>> \`\`\`css\n${mCommands.join('\n')} \`\`\``,
@@ -36,7 +39,7 @@ module.exports = {
 			});
 		}
 
-		const df = [process.env.PREFIX+'.xp <current lvl> <targetlvl> [current xp]'];
+		const df = [process.env.PREFIX + '.xp <current lvl> <targetlvl> [current xp]'];
 		fields.push({
 			name: 'Public Commands',
 			value: `>>> \`\`\`css\n${df.join('\n')} \`\`\``,
@@ -54,6 +57,12 @@ module.exports = {
 		});
 
 		const emoji = bot.emojis.cache.get('815588419673391186');
-		msg.author.send(embed({ title: `${emoji} Help`, desc: `**Prefix:** \`${process.env.PREFIX}\``, fields }));
+		msg.author.send(
+			embed({
+				title: `${emoji} Help`,
+				desc: `**Prefix:** \`${process.env.PREFIX}\`.`,
+				fields,
+			})
+		);
 	},
 };

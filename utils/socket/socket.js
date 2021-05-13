@@ -33,19 +33,18 @@ app.post('/', function (request, response) {
 });
 var socket;
 function connect() {
-	try{
+	try {
 		socket = new WebSocket('wss://social.krunker.io/ws', {
-			headers: { origin: 'https://krunker.io/' }
+			headers: { origin: 'https://krunker.io/' },
 		});
-	}
-	catch(e) {
-		console.log('e ' + e)
+	} catch (e) {
+		console.log('e ' + e);
 	}
 }
 function reconnect() {
 	var interval = setInterval(function () {
 		connect();
-		console.log("Trying to connect to the socket...")
+		console.log('Trying to reconnect to the socket...');
 		if (connected) {
 			clearInterval(interval);
 		}
@@ -156,5 +155,5 @@ module.exports = {
 				clearInterval(interval);
 			}, 2000);
 		});
-	}
+	},
 };
