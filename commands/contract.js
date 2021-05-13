@@ -29,7 +29,7 @@ module.exports = {
 			const data = await socket.clan("grz");
 			var playerIndex;
 			for(var i=0;i<data[3].members.length;i++) {
-				if(data[3].members[i].p === playerName) {
+				if(data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
 					playerIndex=i;
 					break;
 				}
@@ -59,10 +59,6 @@ module.exports = {
 };
 
 function createTable(contract) {
-	const kpm = contract.kills() / ((contract.timePlayed()/60000)<180 ? (contract.timePlayed()/60000) : 180);
-	const kpg = kpm*4;
-	const estKills = kpm * 60 * 3;
-	const kd = contract.kills()/contract.deaths()
 	return [
 		[
 			'Name',
@@ -72,11 +68,11 @@ function createTable(contract) {
 		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
 			numberFormat(contract.kills())+'\n'+
 			msToDHM(contract.timePlayed())+'\n'+
-			numberFormat(kpm)+'\n'+
-			numberFormat(kpg)+'\n'+
-			numberFormat(estKills)+'\n\n'+
+			numberFormat(contract.kpm())+'\n'+
+			numberFormat(contract.kpg())+'\n'+
+			numberFormat(contract.estKills())+'\n\n'+
 			numberFormat(contract.deaths())+'\n'+
-			numberFormat(kd)
+			numberFormat(contract.kd())
 		]
 	];
 }
