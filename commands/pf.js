@@ -5,7 +5,7 @@ const table = require('table');
 const profile = require('../profile');
 
 module.exports = {
-	name: 'grz.pf',
+	name: process.env.PREFIX+'.pf',
 	description: 'Profile command',
 	async execute(msg, args, bot, socket) {
 		if (
@@ -18,7 +18,7 @@ module.exports = {
 			return msg.channel.send(
 				embed({
 					title: ':x: Missing arguments',
-					desc: `grz.pf \`<Player>\` `,
+					desc: process.env.PREFIX+`.pf \`<Player>\` `,
 				})
 			);
 		}

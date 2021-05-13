@@ -4,7 +4,7 @@ const { embed, numberFormat, minToHM } = require('../utils');
 const table = require('table');
 
 module.exports = {
-	name: 'grz.wars',
+	name: process.env.PREFIX+'.wars',
 	description: 'wars cmd',
 	async execute(msg, args, bot, socket) {
 		if (

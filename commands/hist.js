@@ -1,9 +1,9 @@
 require('dotenv').config();
-const { getSoldierHistory: newGetSoldierReport } = require('../dao');
-const { numberFormat, minToHM, embed } = require('../utils');
+const { getSoldierHistory: newGetSoldierReport } = require('../utils/dao');
+const { numberFormat, minToHM, embed } = require('../utils/utils');
 
 module.exports = {
-	name: 'grz.hist',
+	name: process.env.PREFIX + '.hist',
 	description: 'history cmd',
 	execute(msg, args, bot) {
 		if (

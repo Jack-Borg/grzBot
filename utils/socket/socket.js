@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const html = require('./html');
 
-var profilePackage = '';
+var dataPackage = '';
 var connected = false;
 var captchaPassed = false;
 var token = '';
@@ -16,7 +16,6 @@ var website = {
 	url: 'krunker.io',
 	port: 8080,
 };
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.listen(website.port, () => console.log('Listening on port ' + website.port));
 app.get('/', function (req, res) {
@@ -28,14 +27,31 @@ app.get('/', function (req, res) {
 });
 app.post('/', function (request, response) {
 	token = request.body['h-captcha-response'];
-	response.send(HtmlNoCaptcha);
+	response.send(html.noCaptcha());
 	console.log('Submitting captcha token...');
 	socket.send(Buffer.from([...msgpack.encode(['cptR', token]), 0, 0]));
 });
-
-let socket = new WebSocket('wss://social.krunker.io/ws', {
-	headers: { origin: 'https://krunker.io/' },
-});
+var socket;
+function connect() {
+	try{
+		socket = new WebSocket('wss://social.krunker.io/ws', {
+			headers: { origin: 'https://krunker.io/' }
+		});
+	}
+	catch(e) {
+		console.log('e ' + e)
+	}
+}
+function reconnect() {
+	var interval = setInterval(function () {
+		connect();
+		console.log("Trying to connect to the socket...")
+		if (connected) {
+			clearInterval(interval);
+		}
+	}, 5000);
+}
+connect();
 socket.binaryType = 'arraybuffer';
 
 // socket.onopen = () => {
@@ -47,6 +63,7 @@ socket.onerror = function (error) {
 socket.onclose = function (event) {
 	console.log('Socket connection closed');
 	connected = false;
+	reconnect();
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
@@ -61,7 +78,7 @@ socket.onmessage = (event) => {
 			captchaPassed = false;
 			break;
 		case '0':
-			profilePackage = data;
+			dataPackage = data;
 			break;
 		case 'pir':
 			if (!connected) {
@@ -97,9 +114,9 @@ module.exports = {
 			sendData(['r', 'profile', name, null]);
 			console.log('Requesting Profile from: ', name);
 			var interval = setInterval(function () {
-				if (profilePackage[2] === name) {
+				if (dataPackage[2] === name) {
 					clearInterval(interval);
-					resolve(profilePackage);
+					resolve(dataPackage);
 				}
 			}, 200);
 			setTimeout(() => {
@@ -113,9 +130,9 @@ module.exports = {
 			sendData(['r', 'clan', name, null]);
 			console.log('Requesting Clan: ', name);
 			var interval = setInterval(function () {
-				if (profilePackage[2] === name) {
+				if (dataPackage[2] === name) {
 					clearInterval(interval);
-					resolve(profilePackage);
+					resolve(dataPackage);
 				}
 			}, 200);
 			setTimeout(() => {
@@ -129,9 +146,9 @@ module.exports = {
 			sendData(['r', 'clanwars', null, null]);
 			console.log('Requesting CW');
 			var interval = setInterval(function () {
-				if (profilePackage[1] === 'clanwars') {
+				if (dataPackage[1] === 'clanwars') {
 					clearInterval(interval);
-					resolve(profilePackage);
+					resolve(dataPackage);
 				}
 			}, 200);
 			setTimeout(() => {
@@ -144,10 +161,3 @@ module.exports = {
 		return profile[3]['player_' + state];
 	},
 };
-
-/*
-this.updateLevel = function() {
-    var e = n.rankVar * Math.sqrt(this.score);
-    this.level = Math.floor(e), this.levelProg = Math.round(100 * (e - this.level)), this.level = Math.max(1, this.level)
-}
-*/

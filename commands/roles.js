@@ -4,7 +4,7 @@ const { embed } = require('../utils');
 const profile = require('../profile');
 
 module.exports = {
-	name: 'grz.roles',
+	name: process.env.PREFIX+'.roles',
 	description: 'get roles cmd',
 	async execute(msg, args, bot, socket) {
 		if (msg.author.id !== process.env.DEVID) return;

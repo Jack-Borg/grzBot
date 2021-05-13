@@ -1,9 +1,9 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, numberFormat } = require('../utils');
+const { embed, numberFormat } = require('../utils/utils');
 
 module.exports = {
-	name: 'grz.kpm',
+	name: process.env.PREFIX + '.kpm',
 	description: 'testing cmd',
 	async execute(msg, args, bot, socket) {
 		// if (msg.author.id !== process.env.DEVID) return;

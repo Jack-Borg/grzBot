@@ -13,7 +13,7 @@ bot.login(process.env.TOKEN);
 
 bot.on('ready', () => {
 	console.info(`Logged in as ${bot.user.tag}!`);
-	bot.user.setActivity('grz.help', {
+	bot.user.setActivity(process.env.PREFIX+'.help', {
 		type: 'LISTENING',
 	});
 });
@@ -38,22 +38,3 @@ bot.on('message', (msg) => {
 		msg.reply('there was an error trying to execute that command!');
 	}
 });
-
-// const cron = require('cron');
-// new cron.CronJob('1 */30 * * * *', () => {
-// scrape().then((res) =>
-// 	dao(res).then(() => bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot))
-// );
-// 	bot.commands.get('grz.stats').execute(undefined, ['3MTIwOD'], bot);
-// }).start();
-
-const cron = require('cron');
-new cron.CronJob('1 */20 * * * *', async () => {
-	try {
-		await socket.connected();
-		const names = ['jack_borg', 'grizzly66', 'supermac', 'crafterl'];
-		socket.profile(names[Math.floor(Math.random() * names.length)]);
-	} catch (e) {
-		console.error('e', e);
-	}
-}).start();

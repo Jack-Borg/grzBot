@@ -1,10 +1,10 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, numberFormat, minToHM } = require('../utils');
+const { embed, numberFormat, minToHM } = require('../utils/utils');
 const { table } = require('table');
 
 module.exports = {
-	name: 'grz.test',
+	name: process.env.PREFIX + '.test',
 	description: 'testing cmd',
 	async execute(msg, args, bot, socket) {
 		if (msg.author.id !== process.env.DEVID) return;
@@ -13,7 +13,7 @@ module.exports = {
 			await socket.connected();
 			// const cw = await socket.cw();
 			// console.log(cw[3].p);
-			const data = await socket.clan('mage');
+			const data = await socket.clan('grz');
 			const soldiers = data[3].members
 				.filter((m) => m.tp > 0)
 				.map((m) => {

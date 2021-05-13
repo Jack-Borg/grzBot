@@ -1,10 +1,10 @@
 require('dotenv').config();
-const { getWarReport: getWarReport, getSoldierReport } = require('../dao');
-const { numberFormat, minToHM, embed } = require('../utils');
+const { getWarReport: getWarReport, getSoldierReport } = require('../utils/dao');
+const { numberFormat, minToHM, embed } = require('../utils/utils');
 const { table } = require('table');
 
 module.exports = {
-	name: 'grz.stats',
+	name: process.env.PREFIX + '.stats',
 	description: 'Clan War Stats',
 	execute(msg, args, bot) {
 		if (

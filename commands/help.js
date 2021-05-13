@@ -1,12 +1,12 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed } = require('../utils');
+const { embed } = require('../utils/utils');
 
 module.exports = {
-	name: 'grz.help',
+	name: process.env.PREFIX + '.help',
 	description: 'help cmd',
 	execute(msg, args, bot) {
-		msg.reply(embed({ title: ':email: you got mail' }));
+		msg.reply(embed({ title: ':email: You got a mail' }));
 
 		const fields = [];
 
@@ -15,10 +15,10 @@ module.exports = {
 			msg.author.id == process.env.LEADERID
 		) {
 			const cwf = [
-				'grz.stats [War number]',
-				'grz.stats <kr-username> [War number]',
-				'grz.hist <kr-username>',
-				'grz.post <Post data>',
+				process.env.PREFIX + '.stats [War number]',
+				process.env.PREFIX + '.stats <kr-username> [War number]',
+				process.env.PREFIX + '.hist <kr-username>',
+				process.env.PREFIX + '.post <Post data>',
 			];
 			fields.push({
 				name: 'Clan War Commands',
@@ -28,7 +28,10 @@ module.exports = {
 		}
 
 		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
-			const mCommands = ['grz.pf <kr-username>', 'grz.mastery <kr-username>'];
+			const mCommands = [
+				process.env.PREFIX + '.pf <kr-username>',
+				process.env.PREFIX + '.mastery <kr-username>',
+			];
 			fields.push({
 				name: 'Member Commands',
 				value: `>>> \`\`\`css\n${mCommands.join('\n')} \`\`\``,
@@ -36,7 +39,7 @@ module.exports = {
 			});
 		}
 
-		const df = ['grz.xp <current lvl> <targetlvl> [current xp]'];
+		const df = [process.env.PREFIX + '.xp <current lvl> <targetlvl> [current xp]'];
 		fields.push({
 			name: 'Public Commands',
 			value: `>>> \`\`\`css\n${df.join('\n')} \`\`\``,
@@ -48,12 +51,18 @@ module.exports = {
 			value: `*Syntax: \`<>\` required, \`[]\` optional
             do not write \`<>\` or \`[]\`*
             
-            This bot is being developed by <@134785189128830977>
-            Please contact <@134785189128830977> about any bugs, suggestions or questions`,
+            This bot is being developed by <@${process.env.DEVID}>
+            Please contact <@${process.env.DEVID}> about any bugs, suggestions or questions`,
 			inline: false,
 		});
 
 		const emoji = bot.emojis.cache.get('815588419673391186');
-		msg.author.send(embed({ title: `${emoji} Help`, desc: `**Prefix:** \`grz.\``, fields }));
+		msg.author.send(
+			embed({
+				title: `${emoji} Help`,
+				desc: `**Prefix:** \`${process.env.PREFIX}\`.`,
+				fields,
+			})
+		);
 	},
 };
