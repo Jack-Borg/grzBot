@@ -41,20 +41,17 @@ function connect() {
 		console.log('e ' + e);
 	}
 }
-function reconnect() {
-	var interval = setInterval(function () {
-		connect();
-		console.log('Trying to reconnect to the socket...');
-		if (connected) {
-			clearInterval(interval);
-		}
-	}, 5000);
-}
+// function reconnect() {
+// 	var interval = setInterval(function () {
+// 		connect();
+// 		console.log('Trying to reconnect to the socket...');
+// 		if (connected) {
+// 			clearInterval(interval);
+// 		}
+// 	}, 5000);
+// }
 connect();
 socket.binaryType = 'arraybuffer';
-
-// socket.onopen = () => {
-// };
 
 socket.onerror = function (error) {
 	console.error('Websocket error: ', error);
@@ -62,7 +59,7 @@ socket.onerror = function (error) {
 socket.onclose = function (event) {
 	console.log('Socket connection closed');
 	connected = false;
-	reconnect();
+	// reconnect();
 };
 socket.onmessage = (event) => {
 	let data = msgpack.decode(new Uint8Array(event.data));
