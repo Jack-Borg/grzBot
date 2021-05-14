@@ -60,22 +60,6 @@ function createTable(contract) {
 	return [
 		['Name', 'Value'],
 		[
-			'[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
-			numberFormat(contract.kills()) +
-				'\n' +
-				msToDHM(contract.timePlayed()) +
-				'\n' +
-				numberFormat(kpm) +
-				'\n' +
-				numberFormat(kpg) +
-				'\n' +
-				numberFormat(estKills) +
-				'\n\n' +
-				numberFormat(contract.deaths()) +
-				'\n' +
-				numberFormat(kd),
-		],
-		[
 		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
 			numberFormat(contract.kills())+'\n'+
 			msToDHM(contract.timePlayed())+'\n'+
