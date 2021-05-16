@@ -39,10 +39,7 @@ function connect() {
 		headers: { origin: 'https://krunker.io/' },
 	});
 	socket.binaryType = 'arraybuffer';
-	socket.onopen = function (event) {
-		console.log('Socket is connected');
-		connected = true;
-	};
+
 	socket.onerror = function (error) {
 		console.error('Websocket error: ', error);
 	};
@@ -68,7 +65,7 @@ function connect() {
 				break;
 			case 'pir':
 				if (!connected) {
-					//console.log('Socket connection open');
+					console.log('Socket connection open');
 					connected = true;
 				}
 				captchaPassed = true;
