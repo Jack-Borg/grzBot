@@ -4,7 +4,7 @@ const { embed } = require('../utils/utils');
 const profile = require('../utils/classes/profile');
 
 module.exports = {
-	name: process.env.PREFIX+'.roles',
+	name: process.env.PREFIX + '.roles',
 	description: 'get roles cmd',
 	async execute(msg, args, bot, socket) {
 		if (msg.author.id !== process.env.DEVID) return;
@@ -24,7 +24,7 @@ module.exports = {
 
 			const user = msg.guild.members.cache.find((m) => m.id == msg.author.id);
 
-			let desRoles = getDeservedRoles(pf.nukes(), pf.kd(), pf.lvl(), pf.challenge());
+			let desRoles = getDeservedRoles(pf.nukes, pf.kd, pf.lvl, pf.challenge);
 
 			const notDesRoles = allRolesList()
 				.filter((r) => !desRoles.includes(r))

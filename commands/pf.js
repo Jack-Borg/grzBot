@@ -28,13 +28,13 @@ module.exports = {
 			const data = await socket.profile(args.join(' '));
 			const pf = new profile(data);
 
-			const TableData = createTable(pf);
+			const TableData = newCreateTable(pf);
 			const TableConfig = {
 				border: table.getBorderCharacters(`ramac`),
 			};
 
 			const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
-			msg.reply(embed({ title: pf.name(), desc }));
+			msg.reply(embed({ title: pf.name, desc }));
 		} catch (e) {
 			console.error('e', e);
 			bot.users.cache
@@ -45,43 +45,43 @@ module.exports = {
 	},
 };
 
-function createTable(pf) {
+function newCreateTable(pf) {
 	return [
 		[
-			'LVL\n' + pf.lvl(),
-			'Challenge\n' + pf.challenge(),
-			'KR\n' + numberFormat(pf.kr()),
-			'Score\n' + numberFormat(pf.score()),
+			'LVL\n' + pf.lvl,
+			'Challenge\n' + pf.challenge,
+			'KR\n' + numberFormat(pf.kr),
+			'Score\n' + numberFormat(pf.score),
 		],
 		[
-			'SPK\n' + numberFormat(pf.spk()),
-			'Kills\n' + numberFormat(pf.kills()),
-			'Deaths\n' + numberFormat(pf.deaths()),
-			'KDR\n' + numberFormat(pf.kd()),
+			'SPK\n' + numberFormat(pf.spk),
+			'Kills\n' + numberFormat(pf.kills),
+			'Deaths\n' + numberFormat(pf.deaths),
+			'KDR\n' + numberFormat(pf.kd),
 		],
 		[
-			'KPG\n' + numberFormat(pf.kpg()),
-			'Games\n' + numberFormat(pf.games()),
-			'W/L\n' + numberFormat(pf.wl()),
-			'Wins\n' + numberFormat(pf.wins()),
+			'KPG\n' + numberFormat(pf.kpg),
+			'Games\n' + numberFormat(pf.games),
+			'W/L\n' + numberFormat(pf.wl),
+			'Wins\n' + numberFormat(pf.wins),
 		],
 		[
-			'Losses\n' + numberFormat(pf.losses()),
-			'Assists\n' + numberFormat(pf.assists()),
-			'Nukes\n' + numberFormat(pf.nukes()),
-			'KR-Packages\n' + numberFormat(pf.kr_packages()),
+			'Losses\n' + numberFormat(pf.losses),
+			'Assists\n' + numberFormat(pf.assists),
+			'Nukes\n' + numberFormat(pf.nukes),
+			'KR-Packages\n' + numberFormat(pf.kr_packages),
 		],
 		[
-			'Melee\n' + numberFormat(pf.melee()),
-			'Beatdowns\n' + numberFormat(pf.beatdowns()),
-			'Bullseyes\n' + numberFormat(pf.bullseyes()),
-			'Headshots\n' + numberFormat(pf.headshots()),
+			'Melee\n' + numberFormat(pf.melee),
+			'Beatdowns\n' + numberFormat(pf.beatdowns),
+			'Bullseyes\n' + numberFormat(pf.bullseyes),
+			'Headshots\n' + numberFormat(pf.headshots),
 		],
 		[
-			'Wallbangs\n' + numberFormat(pf.wallbangs()),
-			'Sprays Placed\n' + numberFormat(pf.sprays()),
-			'Accuracy\n' + numberFormat(pf.accuracy()) + '%',
-			'Time Played\n' + msToDHM(pf.timeplayed()),
+			'Wallbangs\n' + numberFormat(pf.wallbangs),
+			'Sprays Placed\n' + numberFormat(pf.sprays),
+			'Accuracy\n' + numberFormat(pf.accuracy) + '%',
+			'Time Played\n' + msToDHM(pf.timePlayed),
 		],
 	];
 }

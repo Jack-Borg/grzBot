@@ -43,11 +43,11 @@ module.exports = {
 				['[Runner Mastery]', DoneOrFormat((pf.class(9) / lvl50) * 100)],
 				['[Alien Blaster]', 'Coming soon'],
 				['Other mastery', '%'],
-				['[Nuke Tamer]', DoneOrFormat((pf.nukes() / 1000) * 100)],
-				['[Shuriken]', DoneOrFormat((pf.bullseyes() / 10000) * 100)],
-				['[Vandal]', DoneOrFormat((pf.sprays() / 50000) * 100)],
-				['[High Roller]', DoneOrFormat((pf.kr() / 1000000) * 100)],
-				['[Killa]', DoneOrFormat((pf.kills() / 50000) * 100)],
+				['[Nuke Tamer]', DoneOrFormat((pf.nukes / 1000) * 100)],
+				['[Shuriken]', DoneOrFormat((pf.bullseyes / 10000) * 100)],
+				['[Vandal]', DoneOrFormat((pf.sprays / 50000) * 100)],
+				['[High Roller]', DoneOrFormat((pf.kr / 1000000) * 100)],
+				['[Killa]', DoneOrFormat((pf.kills / 50000) * 100)],
 				['[KPD Mastery]', 'Coming soon'],
 			];
 			// Master Trader \`${'???'}\`
@@ -69,7 +69,7 @@ module.exports = {
 			const desc = `\`\`\`css\n${table.table(masteries, TableConfig)}\`\`\``;
 			// console.log(table.table(t, TableConfig));
 
-			msg.channel.send(embed({ title: 'Mastery for ' + pf.name(), desc }));
+			msg.channel.send(embed({ title: 'Mastery for ' + pf.name, desc }));
 		} catch (e) {
 			console.error('e', e);
 			bot.users.cache
