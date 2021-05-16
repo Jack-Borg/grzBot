@@ -28,7 +28,6 @@ module.exports = {
 				);
 			}
 			const data = await socket.profile(args.join(' '));
-			console.log('data', data);
 			const pf = new profile(data);
 
 			const masteries = [
