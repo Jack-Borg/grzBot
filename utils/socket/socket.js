@@ -51,9 +51,13 @@ function connect() {
 	socket.onmessage = (event) => {
 		let data = msgpack.decode(new Uint8Array(event.data));
 
-		//console.log('In:', data);
+		// console.log('In:', data);
 		switch (data[0]) {
 			case 'pi':
+				if (!connected) {
+					console.log('Socket connection open');
+					connected = true;
+				}
 				sendData(['po']);
 				break;
 			case 'cpt':
@@ -64,10 +68,6 @@ function connect() {
 				dataPackage = data;
 				break;
 			case 'pir':
-				if (!connected) {
-					console.log('Socket connection open');
-					connected = true;
-				}
 				captchaPassed = true;
 				break;
 		}
