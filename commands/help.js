@@ -60,7 +60,7 @@ module.exports = {
 		msg.author.send(
 			embed({
 				title: `${emoji} Help`,
-				desc: `**Prefix:** \`${process.env.PREFIX}\`.`,
+				desc: `**Prefix:** \`${process.env.PREFIX}.\``,
 				fields,
 			})
 		);
