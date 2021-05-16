@@ -17,7 +17,6 @@ module.exports = {
 		try {
 			await socket.connected();
 			const data = await socket.clan('grz');
-			console.log(data[3].members);
 
 			if (args.length == 0) {
 				const soldiers = data[3].members
@@ -31,24 +30,26 @@ module.exports = {
 				msg.channel.send(clanEmbed(soldiers, process.env.CURRENTWAR));
 			} else {
 				const playerName = args.join(' ');
-				var playerIndex;
-				for (var i = 0; i < data[3].members.length; i++) {
-					if (data[3].members[i].p.toLowerCase() === playerName.toLowerCase()) {
-						playerIndex = i;
-						break;
-					}
-				}
-				if (playerIndex == null) {
+				const contractData = data[3].members.find(
+					(m) => m.p.toLowerCase() == playerName.toLowerCase()
+				);
+
+				if (contractData == undefined) {
 					msg.reply(embed({ title: ':x: Player is probably not in GrZ' }));
 				} else {
-					contract = new contractStats(data, playerIndex);
+					const contract = new contractStats(contractData);
 
 					const TableData = createTable(contract);
 					const TableConfig = {
 						border: table.getBorderCharacters(`ramac`),
+						drawHorizontalLine: (lineIndex, rowCount) => {
+							return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
+						},
+						columns: [{ alignment: 'left' }, { alignment: 'right' }],
 					};
+
 					const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
-					msg.reply(embed({ title: contract.name(), desc }));
+					msg.reply(embed({ title: contract.name, desc }));
 				}
 			}
 		} catch (e) {
@@ -64,22 +65,14 @@ module.exports = {
 function createTable(contract) {
 	return [
 		['Name', 'Value'],
-		[
-			'[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
-			numberFormat(contract.kills()) +
-				'\n' +
-				msToDHM(contract.timePlayed()) +
-				'\n' +
-				numberFormat(contract.kpm()) +
-				'\n' +
-				numberFormat(contract.kpg()) +
-				'\n' +
-				numberFormat(contract.estKills()) +
-				'\n\n' +
-				numberFormat(contract.deaths()) +
-				'\n' +
-				numberFormat(contract.kd()),
-		],
+		['[Kills]', numberFormat(contract.kills)],
+		['[Time Played]', msToDHM(contract.timePlayed)],
+		['[KPM]', numberFormat(contract.kpm)],
+		['[KPG]', numberFormat(contract.kpg)],
+		['[est.Total]', numberFormat(contract.estKills)],
+		['', ''],
+		['[Deaths]', numberFormat(contract.deaths)],
+		['[K/D]', numberFormat(contract.kd)],
 	];
 }
 

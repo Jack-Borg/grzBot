@@ -1,30 +1,20 @@
 module.exports = class {
-	constructor(contractData, playerIndex) {
-		this.contractData = contractData;
-        this.playerIndex = playerIndex;
+	constructor(contractData) {
+		this.name = contractData.p;
+		this.kills = contractData.ki;
+		this.deaths = contractData.de;
+		this.timePlayed = contractData.tp;
+
+		this.kpm = this.kills / (this.timePlayed / 60000 < 180 ? this.timePlayed / 60000 : 180);
+		this.kpm = isNaN(this.kpm) ? 0 : this.kpm;
+
+		this.kpg = this.kpm * 4;
+		this.kpg = isNaN(this.kpg) ? 0 : this.kpg;
+
+		this.estKills = this.kpm * 60 * 3;
+		this.estKills = isNaN(this.estKills) ? 0 : this.estKills;
+
+		this.kd = this.kills / this.deaths;
+		this.kd = isNaN(this.kd) ? 0 : this.kd;
 	}
-	name() {
-		return this.contractData[3].members[this.playerIndex].p
-	}
-    kills() {
-        return this.contractData[3].members[this.playerIndex].ki
-    }
-    deaths() {
-        return this.contractData[3].members[this.playerIndex].de
-    }
-    timePlayed() {
-        return this.contractData[3].members[this.playerIndex].tp
-    }
-    kpm() {
-        return this.kills() / ((this.timePlayed()/60000)<180 ? (this.timePlayed()/60000) : 180);
-    }
-    kpg() {
-        return this.kpm()*4
-    }
-	estKills() {
-        return this.kpm()*60*3
-    }
-    kd() {
-        return this.kills()/this.deaths()
-    }
-}
+};
