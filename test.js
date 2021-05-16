@@ -64,21 +64,3 @@
 
 // console.log(xpTo(5));
 // console.log(xpTo2(5));
-
-const table = require('table');
-
-const data = [
-	['0A', '0B', '0C'],
-	['1A', '1B', '1C'],
-	['2A', '2B', '2C'],
-	['3A', '3B', '3C'],
-	['4A', '4B', '4C'],
-];
-
-const config = {
-	drawHorizontalLine: (lineIndex, rowCount) => {
-		return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
-	},
-};
-
-console.log(table.table(data, config));
