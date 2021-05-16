@@ -31,60 +31,65 @@ app.post('/', function (request, response) {
 	console.log('Submitting captcha token...');
 	socket.send(Buffer.from([...msgpack.encode(['cptR', token]), 0, 0]));
 });
+
 var socket;
+
 function connect() {
-	try {
-		socket = new WebSocket('wss://social.krunker.io/ws', {
-			headers: { origin: 'https://krunker.io/' },
-		});
-	} catch (e) {
-		console.log('e ' + e);
-	}
+	socket = new WebSocket('wss://social.krunker.io/ws', {
+		headers: { origin: 'https://krunker.io/' },
+	});
+	socket.binaryType = 'arraybuffer';
+	socket.onopen = function (event) {
+		console.log('Socket is connected');
+		connected = true;
+	};
+	socket.onerror = function (error) {
+		console.error('Websocket error: ', error);
+	};
+	socket.onclose = function (event) {
+		console.log('Socket connection closed');
+		connected = false;
+		reconnect();
+	};
+	socket.onmessage = (event) => {
+		let data = msgpack.decode(new Uint8Array(event.data));
+
+		//console.log('In:', data);
+		switch (data[0]) {
+			case 'pi':
+				sendData(['po']);
+				break;
+			case 'cpt':
+				console.log('Need to complete captcha... Captcha is hosted...');
+				captchaPassed = false;
+				break;
+			case '0':
+				dataPackage = data;
+				break;
+			case 'pir':
+				if (!connected) {
+					//console.log('Socket connection open');
+					connected = true;
+				}
+				captchaPassed = true;
+				break;
+		}
+	};
 }
-// function reconnect() {
-// 	var interval = setInterval(function () {
-// 		connect();
-// 		console.log('Trying to reconnect to the socket...');
-// 		if (connected) {
-// 			clearInterval(interval);
-// 		}
-// 	}, 5000);
-// }
+
+function reconnect() {
+	var interval = setInterval(function () {
+		if (!connected) {
+			connect();
+			console.log('Trying to reconnect to the socket...');
+		} else {
+			clearInterval(interval);
+		}
+	}, 2500);
+}
+
 connect();
-socket.binaryType = 'arraybuffer';
 
-socket.onerror = function (error) {
-	console.error('Websocket error: ', error);
-};
-socket.onclose = function (event) {
-	console.log('Socket connection closed');
-	connected = false;
-	// reconnect();
-};
-socket.onmessage = (event) => {
-	let data = msgpack.decode(new Uint8Array(event.data));
-
-	// console.log('In:', data);
-	switch (data[0]) {
-		case 'pi':
-			sendData(['po']);
-			break;
-		case 'cpt':
-			console.log('Need to complete captcha... Captcha is hosted...');
-			captchaPassed = false;
-			break;
-		case '0':
-			dataPackage = data;
-			break;
-		case 'pir':
-			if (!connected) {
-				console.log('Socket connection open');
-				connected = true;
-			}
-			captchaPassed = true;
-			break;
-	}
-};
 const sendData = (data) => {
 	// console.log('Out:', data);
 	socket.send(msgpack.encode(data).buffer);
