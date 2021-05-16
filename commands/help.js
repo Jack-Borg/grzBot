@@ -51,7 +51,7 @@ module.exports = {
 			value: `*Syntax: \`<>\` required, \`[]\` optional
             do not write \`<>\` or \`[]\`*
             
-            This bot is being developed by <@${process.env.DEVID}>
+            This bot is being developed by <@${process.env.DEVID}> and <@${process.env.DEV2ID}>
             Please contact <@${process.env.DEVID}> about any bugs, suggestions or questions`,
 			inline: false,
 		});
