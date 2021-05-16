@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //top soldiers 5 war program
-const { getAllWarReport } = require('./dao');
+const { getAllWarReport } = require('./utils/dao');
 
 getAllWarReport().then((soldiers) => {
 	let tmp = {};
@@ -33,7 +33,7 @@ getAllWarReport().then((soldiers) => {
 		});
 	}
 
-	console.log(scores.sort((a, b) => b.kills - a.kills).slice(0, 20));
+	console.log(scores.sort((a, b) => b.kills - a.kills).slice(0, 30));
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -17,6 +17,7 @@ module.exports = {
 		try {
 			await socket.connected();
 			const data = await socket.clan('grz');
+			console.log(data[3].members);
 
 			if (args.length == 0) {
 				const soldiers = data[3].members
@@ -24,6 +25,8 @@ module.exports = {
 					.map((m) => {
 						return { name: m.p, kills: m.ki, minutesSpent: Math.floor(m.tp / 60000) };
 					});
+				if (soldiers.length == 0)
+					return msg.channel.send(embed({ title: 'No soldiers found' }));
 
 				msg.channel.send(clanEmbed(soldiers, process.env.CURRENTWAR));
 			} else {
@@ -78,15 +81,21 @@ function createTable(contract) {
 				numberFormat(kd),
 		],
 		[
-		    '[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
-			numberFormat(contract.kills())+'\n'+
-			msToDHM(contract.timePlayed())+'\n'+
-			numberFormat(contract.kpm())+'\n'+
-			numberFormat(contract.kpg())+'\n'+
-			numberFormat(contract.estKills())+'\n\n'+
-			numberFormat(contract.deaths())+'\n'+
-			numberFormat(contract.kd())
-		]
+			'[Kills]\n[Time Played]\n[KPM]\n[KPG]\n[est.Total]\n\n[Deaths]\n[K/D]',
+			numberFormat(contract.kills()) +
+				'\n' +
+				msToDHM(contract.timePlayed()) +
+				'\n' +
+				numberFormat(contract.kpm()) +
+				'\n' +
+				numberFormat(contract.kpg()) +
+				'\n' +
+				numberFormat(contract.estKills()) +
+				'\n\n' +
+				numberFormat(contract.deaths()) +
+				'\n' +
+				numberFormat(contract.kd()),
+		],
 	];
 }
 
