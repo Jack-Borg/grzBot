@@ -143,3 +143,27 @@ module.exports = class {
 		return Math.floor(0.03 * Math.sqrt(this.score()));
 	}
 };
+/*
+class 0 = ak
+class 1 = sniper
+class 2 = smg
+class 3 = lmg
+class 4 = shotgun
+class 5 = revolver
+class 6 = semi auto
+class 7 = rocket
+class 8 = akimbo
+class 9 = runner
+class 11 = crossbow
+class 12 = famas
+class 13 = trooper
+
+tmk = bullseye
+hs = headshot
+fk = beatdown
+wb = wallbang
+n = nukes
+mk = melee
+spry = sprays
+ast = assist
+*/
