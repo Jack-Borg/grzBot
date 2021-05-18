@@ -4,7 +4,7 @@ module.exports = {
 	Test: require('./test'),
 	Hist: require('./hist'),
 	Xp: require('./xp'),
-	Post: require('./post'),
+	// Post: require('./post'),
 	Help: require('./help'),
 	Mastery: require('./mastery'),
 	Roles: require('./roles'),

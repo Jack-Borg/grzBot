@@ -38,65 +38,47 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// function xp(lvl) {
-// 	if (lvl == 2) return 4444;
+const fs = require('fs');
+const dao = require('./utils/dao');
 
-// 	const res = 1111 + 2222 * (lvl - 1);
+// dao.postReport([{ name: 'asdasdasd', kills: 123, timePlayed: 346234 }]);
 
-// 	return res + parseInt(res / 10000);
-// }
-
-// function xpTo(lvl) {
-// 	let total = 0;
-// 	for (let i = 1; i < lvl; i++) {
-// 		total += xp(i);
-// 	}
-// 	return total;
-// }
-
-// function xpToTarget(currLvl, tarLvl) {
-// 	return xpTo(tarLvl) - xpTo(currLvl);
-// }
-
-// function xpTo2(lvl) {
-// 	return 1111 + 2222 * (lvl - 1) //* ((lvl * (lvl + 1)) / 2);
-// }
-
-// console.log(xpTo(5));
-// console.log(xpTo2(5));
-
-// const dao = require('./utils/dao');
+// dao.delete();
 
 // const res = {};
 // dao.getAllWarReport().then((r) => {
 // 	r.map((s) => {
 // 		if (res[s.name]) {
-// 			res[s.name].wars.push({
-// 				war: s.war,
+// 			res[s.name].wars[s.war] = {
 // 				kills: s.last.kills,
-// 				minutesSpent: s.last.minutesSpent,
-// 				scores: s.scores,
-// 			});
+// 				timePlayed: s.last.minutesSpent * 60000,
+// 				scores: s.scores.map((score) => {
+// 					return { kills: score.kills, timePlayed: score.minutesSpent * 60000 };
+// 				}),
+// 			};
 // 		} else {
 // 			res[s.name] = {
 // 				name: s.name,
-// 				wars: [
-// 					{
-// 						war: s.war,
+// 				wars: {
+// 					[s.war]: {
 // 						kills: s.last.kills,
-// 						minutesSpent: s.last.minutesSpent,
-// 						scores: s.scores,
+// 						timePlayed: s.last.minutesSpent * 60000,
+// 						scores: s.scores.map((score) => {
+// 							return { kills: score.kills, timePlayed: score.minutesSpent * 60000 };
+// 						}),
 // 					},
-// 				],
+// 				},
 // 			};
 // 		}
 // 	});
-// 	for (let key in res) {
-// 		console.log(res[key]);
-// 	}
+// 	fs.writeFile('backup.json', JSON.stringify(Object.values(res)), function (err) {
+// 		if (err) throw err;
+// 		console.log('Saved!');
+// 	});
+// dao.postAll(Object.values(res));
 // });
-const lvl = 94;
-const currentxp = 104915;
-const total = 9714915;
 
-console.log(Math.sqrt(total) * 0.03);
+fs.readFile('./tmp.json', 'utf8', (err, data) => {
+	if (err) throw err;
+	dao.postAll(JSON.parse(data));
+});

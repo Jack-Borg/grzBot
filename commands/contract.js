@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { embed, msToDHM, numberFormat, minToHM } = require('../utils/utils');
 const table = require('table');
 const contractStats = require('../utils/classes/contractStats');
+const dao = require('../utils/dao');
 
 module.exports = {
 	name: process.env.PREFIX + '.contract',
@@ -18,12 +19,18 @@ module.exports = {
 			await socket.connected();
 			const data = await socket.clan('grz');
 
+			const soldiers = data[3].members
+				.filter((m) => m.tp > 0)
+				.map((m) => {
+					return { name: m.p, kills: m.ki, timePlayed: m.tp };
+				});
+
+			if (soldiers.length > 0) {
+				console.log('post soldiers', soldiers);
+				// dao.postReport(soldiers);
+			}
+
 			if (args.length == 0) {
-				const soldiers = data[3].members
-					.filter((m) => m.tp > 0)
-					.map((m) => {
-						return { name: m.p, kills: m.ki, minutesSpent: Math.floor(m.tp / 60000) };
-					});
 				if (soldiers.length == 0)
 					return msg.channel.send(embed({ title: 'No soldiers found' }));
 
@@ -77,7 +84,7 @@ function createTable(contract) {
 }
 
 function clanEmbed(soldiers, warN) {
-	const contractLength = warN <= 3 ? 240 : 180;
+	const contractLength = (warN <= 3 ? 240 : 180) * 60000;
 	const names = [];
 	const kills = [];
 	const kpm = [];
@@ -92,29 +99,25 @@ function clanEmbed(soldiers, warN) {
 		names.push(s.name.split('_').join('\\_'));
 		kills.push(numberFormat(s.kills));
 		totalKills += s.kills;
-		const tmp = s.kills / s.minutesSpent;
+		const tmp = s.kills / (s.timePlayed / 60000);
 		//handle 0/0 == NaN
 		kpm.push(isNaN(tmp) ? 0 : tmp);
-		let t = contractLength - s.minutesSpent;
-		t = t < 0 ? '-' + minToHM(Math.abs(t)) : minToHM(t);
+		let t = contractLength - s.timePlayed;
+		t = (t < 0 ? '-' : '') + msToDHM(Math.abs(t));
 		// console.log(s.name, t);
 		time.push(t);
-		if (s.minutesSpent < contractLength) activeCount++;
+		if (s.timePlayed < contractLength) activeCount++;
 	});
 	const avgKPM = kpm.reduce((p, c) => p + c) / kpm.length;
-	const avgEstKills = avgKPM * contractLength;
+	const avgEstKills = avgKPM * (contractLength / 60000);
 
 	const fields = [
 		{ name: 'Name', value: names.join('\n'), inline: true },
 		{ name: 'Kills', value: kills.join('\n'), inline: true },
 		{ name: 'Time left', value: time.join('\n'), inline: true },
 		{ name: 'Kills', value: numberFormat(totalKills), inline: true },
-		{ name: 'Avg KPM', value: numberFormat(avgKPM.toFixed(2)), inline: true },
-		{
-			name: 'Avg est. kills',
-			value: numberFormat(avgEstKills.toFixed(2)),
-			inline: true,
-		},
+		{ name: 'Avg KPM', value: numberFormat(avgKPM), inline: true },
+		{ name: 'Avg est. kills', value: numberFormat(avgEstKills), inline: true },
 		{ name: 'Total Soldiers', value: totalCount, inline: true },
 		{ name: 'Active Soldiers', value: activeCount, inline: true },
 	];
@@ -122,38 +125,38 @@ function clanEmbed(soldiers, warN) {
 	return embed({ title: 'Report: war ' + warN, fields });
 }
 
-function avg(soldiers) {
-	let kills = 0;
-	let est = 0;
-	let kpm = 0;
-	let kpg = 0;
-	let tP = 0;
-	let tL = 0;
+// function avg(soldiers) {
+// 	let kills = 0;
+// 	let est = 0;
+// 	let kpm = 0;
+// 	let kpg = 0;
+// 	let tP = 0;
+// 	let tL = 0;
 
-	console.log(
-		soldiers.filter((s) => s.minutesSpent < 180).sort((a, b) => b.minutesSpent - a.minutesSpent)
-	);
+// 	console.log(
+// 		soldiers.filter((s) => s.minutesSpent < 180).sort((a, b) => b.minutesSpent - a.minutesSpent)
+// 	);
 
-	soldiers.forEach((s) => {
-		const sTP = s.minutesSpent >= 180 ? 180 : s.minutesSpent;
-		let tmp = s.kills / sTP;
-		//handle 0/0 == NaN
-		tmp = isNaN(tmp) ? 0 : tmp;
+// 	soldiers.forEach((s) => {
+// 		const sTP = s.minutesSpent >= 180 ? 180 : s.minutesSpent;
+// 		let tmp = s.kills / sTP;
+// 		//handle 0/0 == NaN
+// 		tmp = isNaN(tmp) ? 0 : tmp;
 
-		kills += s.kills;
-		est += tmp * 180;
-		kpm += tmp;
-		kpg += tmp * 4;
-		tP += sTP;
-		tL += 180 - sTP;
-	});
+// 		kills += s.kills;
+// 		est += tmp * 180;
+// 		kpm += tmp;
+// 		kpg += tmp * 4;
+// 		tP += sTP;
+// 		tL += 180 - sTP;
+// 	});
 
-	return [
-		[`Kills\n${kills}`, `KPM\n${kpm / soldiers.length}`, `KPG\n${kpg / soldiers.length}`],
-		[
-			`Est. kills\n${est / soldiers.length}`,
-			`Time played\n${minToHM(tP)}`,
-			`Time left\n${minToHM(tL)}`,
-		],
-	];
-}
+// 	return [
+// 		[`Kills\n${kills}`, `KPM\n${kpm / soldiers.length}`, `KPG\n${kpg / soldiers.length}`],
+// 		[
+// 			`Est. kills\n${est / soldiers.length}`,
+// 			`Time played\n${minToHM(tP)}`,
+// 			`Time left\n${minToHM(tL)}`,
+// 		],
+// 	];
+// }

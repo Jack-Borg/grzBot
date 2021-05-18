@@ -1,6 +1,7 @@
 require('dotenv').config();
-const { getSoldierHistory: newGetSoldierReport } = require('../utils/dao');
-const { numberFormat, minToHM, embed } = require('../utils/utils');
+const { getSoldier } = require('../utils/dao');
+const table = require('table');
+const { numberFormat, msToDHM, embed } = require('../utils/utils');
 
 module.exports = {
 	name: process.env.PREFIX + '.hist',
@@ -13,32 +14,37 @@ module.exports = {
 		)
 			return;
 
-		newGetSoldierReport(args[0]).then((soldier) => {
-			if (!soldier)
-				return msg.channel.send(embed({ title: args[0] + ' not found', stamp: false }));
+		getSoldier(args[0]).then((s) => {
+			if (!s) return msg.channel.send(embed({ title: args[0] + ' not found' }));
 
-			msg.channel.send(soldierEmbed(soldier));
+			msg.channel.send(soldierEmbed(s));
 		});
 	},
 };
 
-function soldierEmbed(r) {
-	const wars = [];
-	const kills = [];
-	const time = [];
+function soldierEmbed(s) {
+	const hist = [['War', 'Kills', 'Time Spent']];
+	const wars = Object.values(s.wars);
+	const avgKills = wars.reduce((a, b) => a + b.kills, 0) / wars.length;
+	const avgKpm = wars.reduce((a, b) => a + b.kills / (b.timePlayed / 60000), 0) / wars.length;
 
-	r.wars.forEach((w) => {
-		const contractLength = w.war <= 3 ? 240 : 180;
-		wars.push(w.war);
-		kills.push(numberFormat(w.score.kills));
-		time.push(minToHM(contractLength - w.score.minutesSpent));
-	});
+	for (let n in s.wars) {
+		hist.push([n, numberFormat(s.wars[n].kills), msToDHM(s.wars[n].timePlayed)]);
+	}
 
 	const fields = [
-		{ name: 'Wars', value: wars, inline: true },
-		{ name: 'Kills', value: kills, inline: true },
-		{ name: 'Time left', value: time, inline: true },
+		{ name: 'Average kills', value: numberFormat(avgKills), inline: true },
+		{ name: 'Average kpm', value: numberFormat(avgKpm), inline: true },
 	];
 
-	return embed({ title: r.name.replace('_', '\\_') + ' history', fields });
+	const config = {
+		border: table.getBorderCharacters(`ramac`),
+		drawHorizontalLine: (lineIndex, rowCount) => {
+			return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
+		},
+	};
+
+	const desc = `\`\`\`css\n${table.table(hist, config)}\`\`\``;
+
+	return embed({ title: s.name.split('_').join('\\_') + ' history', desc, fields });
 }
