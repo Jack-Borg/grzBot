@@ -52,7 +52,7 @@ module.exports = {
 				[
 					'[High Roller]',
 					doneOrFormat(pf.kr / 1000000),
-					numberFormat(pf.kr / 1000) + 'k /' + numberFormat(1000) + 'k',
+					numberFormat(pf.kr / 1000) + 'k/' + numberFormat(1000) + 'k',
 				],
 				otherMastery('[Killa]', pf.kills, 50000),
 				['[KPD Mastery]', 'Coming soon', 'Coming soon'],
