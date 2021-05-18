@@ -63,7 +63,14 @@ module.exports = {
 			console.error('e', e);
 			bot.users.cache
 				.find((user) => user.id === process.env.DEVID)
-				.send(embed({ title: 'contract error', desc: 'contract: ' + args.join(' ') }));
+				.send(
+					embed({
+						title: 'contract error',
+						desc: `contract: ${args.join(' ')}\nBy: <@${msg.author.id}>\nIn: <#${
+							msg.channel.id
+						}>`,
+					})
+				);
 			msg.reply(embed({ title: ':x: Unable to get contract' }));
 		}
 	},
