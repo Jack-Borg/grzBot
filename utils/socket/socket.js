@@ -82,7 +82,7 @@ function reconnect() {
 		} else {
 			clearInterval(interval);
 		}
-	}, 2500);
+	}, 5000);
 }
 
 connect();

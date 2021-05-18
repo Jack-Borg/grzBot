@@ -46,15 +46,15 @@ module.exports = {
 
 			const oM = [
 				['Other mastery', '%', 'Progress'],
-				otherMastery('[Nuke Tamer]', pf.nukes, 1000),
-				otherMastery('[Shuriken]', pf.bullseyes, 10000),
-				otherMastery('[Vandal]', pf.sprays, 50000),
+				otherMastery('[Nuke Tamer]', pf.nukes, 1000, '1k'),
+				otherMastery('[Shuriken]', pf.bullseyes, 10000, '10k'),
+				otherMastery('[Vandal]', pf.sprays, 50000, '50k'),
 				[
 					'[High Roller]',
 					doneOrFormat(pf.kr / 1000000),
 					numberFormat(pf.kr / 1000) + 'k/1m',
 				],
-				otherMastery('[Killa]', pf.kills, 50000),
+				otherMastery('[Killa]', pf.kills, 50000, '50k'),
 				['[KPD Mastery]', 'Coming soon', 'Coming soon'],
 			];
 			const masteries = [].concat(cM, oM);
@@ -104,11 +104,11 @@ function classMastery(name, score, tar) {
 	return [name, percent, lvl + '/' + tarLvl];
 }
 
-function otherMastery(name, cur, tar) {
+function otherMastery(name, cur, tar, formattedTar) {
 	if (!cur) cur = 0;
 	if (cur >= tar) return [name, 'Done', 'Done'];
 
 	const percent = doneOrFormat(cur / tar);
 
-	return [name, percent, numberFormat(cur) + '/' + numberFormat(tar)];
+	return [name, percent, numberFormat(cur) + '/' + formattedTar];
 }
