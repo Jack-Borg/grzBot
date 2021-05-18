@@ -133,7 +133,7 @@ module.exports = {
 	// 	MongoClient.connect(url, function (err, db) {
 	// 		if (err) throw err;
 	// 		var dbo = db.db('Krunker');
-	// 		dbo.collection(colName).deleteMany({ war: '3' });
+	// 		dbo.collection(colName).deleteMany({});
 	// 	});
 	// },
 };

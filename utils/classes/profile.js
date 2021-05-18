@@ -2,7 +2,8 @@ module.exports = class {
 	constructor(pfData) {
 		// this.pfData = pfData;
 		// this.pfStats = new Function('return ' + pfData[3]['player_stats'])();
-		const pfStats = JSON.parse(pfData[3]['player_stats']);
+		let pfStats = JSON.parse(pfData[3]['player_stats']);
+		if (!pfStats) pfStats = {};
 
 		this.classes = {};
 		for (let key in pfStats) {

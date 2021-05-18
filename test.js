@@ -64,3 +64,34 @@
 
 // console.log(xpTo(5));
 // console.log(xpTo2(5));
+
+const dao = require('./utils/dao');
+
+const res = {};
+dao.getAllWarReport().then((r) => {
+	r.map((s) => {
+		if (res[s.name]) {
+			res[s.name].wars.push({
+				war: s.war,
+				kills: s.last.kills,
+				minutesSpent: s.last.minutesSpent,
+				scores: s.scores,
+			});
+		} else {
+			res[s.name] = {
+				name: s.name,
+				wars: [
+					{
+						war: s.war,
+						kills: s.last.kills,
+						minutesSpent: s.last.minutesSpent,
+						scores: s.scores,
+					},
+				],
+			};
+		}
+	});
+	for (let key in res) {
+		console.log(res[key]);
+	}
+});
