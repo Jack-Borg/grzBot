@@ -24,14 +24,6 @@ module.exports = {
 				})
 			);
 
-		if (tarLvl > 1000)
-			return msg.channel.send(
-				embed({
-					title: ':x: Number too large',
-					desc: 'Largest supported level is 1000',
-				})
-			);
-
 		if (currLvl > tarLvl)
 			return msg.channel.send(
 				embed({
@@ -54,7 +46,7 @@ module.exports = {
 				})
 			);
 
-		const totalReq = xpToTarget(currLvl, tarLvl) - currentXp;
+		const totalReq = xp(tarLvl) - xp(currLvl) - currentXp;
 		const desc = `
                 Current level: \`${currLvl}\`
                 Target level: \`${tarLvl}\`
@@ -73,21 +65,13 @@ module.exports = {
 };
 
 function xp(lvl) {
-	if (lvl == 2) return 4444;
-
-	const res = 1111 + 2222 * (lvl - 1);
-
-	return res + parseInt(res / 10000);
+	return Math.pow((lvl - 1) / 0.03, 2);
 }
 
-function xpTo(lvl) {
-	let total = 0;
-	for (let i = 1; i < lvl; i++) {
-		total += xp(i);
-	}
-	return total;
-}
+// const lvl = 94;
+// const currentxp = 104915;
+// const total = 9714915;
 
-function xpToTarget(currLvl, tarLvl) {
-	return xpTo(tarLvl) - xpTo(currLvl);
-}
+// console.log(Math.sqrt(total) * 0.03); // lvl from xp
+// console.log(total-currentxp) // xp in current lvl
+// console.log(Math.pow((lvl-1)/0.03,2)) // score for lvl
