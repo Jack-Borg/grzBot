@@ -35,4 +35,7 @@ module.exports = {
 
 		return embed;
 	},
+	isDiscordId: function (id) {
+		return !isNaN(id) && id.length == 18;
+	},
 };

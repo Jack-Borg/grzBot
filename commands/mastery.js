@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, numberFormat } = require('../utils/utils');
+const { embed, numberFormat, isDiscordId } = require('../utils/utils');
 const { getSoldierByDiscord } = require('../utils/dao');
 const table = require('table');
 const profile = require('../utils/classes/profile');
@@ -18,21 +18,23 @@ module.exports = {
 		)
 			return;
 
-		if (args.length == 0) {
-			const player = await getSoldierByDiscord(msg.author.id);
-			if (!player) {
+		let arg = args.join('');
+		if (args.length == 0) arg = msg.author.id;
+
+		if (isDiscordId(arg)) {
+			const name = (await getSoldierByDiscord(msg.author.id)).name;
+			if (!name) {
 				return msg.channel.send(
 					embed({
 						title: ':x: Missing arguments',
-						desc: `grz.mastery \`<Player>\`
+						desc: `grz.mastery \`[Player]\`
+                        Linked account required to use command with no \`[Player]\`
                         or ask <@${process.env.DEVID}> for account linking`,
 					})
 				);
 			}
-			mast(player.name, msg, bot, socket);
-		} else {
-			mast(args.join(' '), msg, bot, socket);
-		}
+			mast(name, msg, bot, socket);
+		} else mast(arg, msg, bot, socket);
 	},
 };
 
