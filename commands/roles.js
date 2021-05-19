@@ -8,7 +8,11 @@ module.exports = {
 	name: process.env.PREFIX + '.roles',
 	description: 'get roles cmd',
 	async execute(msg, args, bot, socket) {
-		if (msg.author.id !== process.env.DEVID) return;
+		if (
+			msg.author.id !== process.env.DEVID &&
+			!msg.member.roles.cache.has(process.env.MEMBERROLE)
+		)
+			return;
 
 		const player = await getSoldierByDiscord(msg.author.id);
 		if (!player) {
