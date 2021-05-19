@@ -20,7 +20,7 @@ module.exports = {
 			embed({
 				title: 'Account linked',
 				desc: `<@${id}> linked to ${name}
-                If you want to have your account linked ask <@${process.env.DEVID}>`,
+                If you want to have your account linked ask <@${process.env.DEVID}> or <@${process.env.DEV2ID}>`,
 			})
 		);
 	},

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const { embed } = require('../utils/utils');
+const { getSoldierByDiscord } = require('../utils/dao');
 const profile = require('../utils/classes/profile');
 
 module.exports = {
@@ -9,49 +10,52 @@ module.exports = {
 	async execute(msg, args, bot, socket) {
 		if (msg.author.id !== process.env.DEVID) return;
 
-		try {
-			await socket.connected();
-			if (args.length == 0) {
-				return msg.channel.send(
-					embed({
-						title: ':x: Missing arguments',
-						desc: `grz.roles \`<Player>\` `,
-					})
-				);
+		const player = await getSoldierByDiscord(msg.author.id);
+		if (!player) {
+			return msg.channel.send(
+				embed({
+					title: ':x: Account not linked',
+					desc: `Ask <@${process.env.DEVID}> or <@${process.env.DEV2ID}> for account linking`,
+				})
+			);
+		} else {
+			try {
+				await socket.connected();
+
+				const data = await socket.profile(player.name);
+				const pf = new profile(data);
+
+				const user = msg.guild.members.cache.find((m) => m.id == msg.author.id);
+
+				let desRoles = getDeservedRoles(pf.nukes, pf.kd, pf.lvl, pf.challenge);
+
+				const notDesRoles = allRolesList()
+					.filter((r) => !desRoles.includes(r))
+					.map((r) => msg.guild.roles.cache.get(r));
+
+				user.roles.remove(notDesRoles).catch(console.error);
+
+				desRoles = desRoles.map((r) => msg.guild.roles.cache.get(r));
+
+				setTimeout(function () {
+					user.roles.add(desRoles).catch(console.error);
+
+					msg.reply(embed({ title: ':white_check_mark: Your roles have been updated' }));
+				}, 500);
+			} catch (e) {
+				console.error('e', e);
+				bot.users.cache
+					.find((user) => user.id === process.env.DEVID)
+					.send(
+						embed({
+							title: 'roles error',
+							desc: `roles: ${args.join(' ')}\nBy: <@${msg.author.id}>\nIn: <#${
+								msg.channel.id
+							}>`,
+						})
+					);
+				msg.reply(embed({ title: ':x: Unable to get profile' }));
 			}
-			const data = await socket.profile(args.join(' '));
-			const pf = new profile(data);
-
-			const user = msg.guild.members.cache.find((m) => m.id == msg.author.id);
-
-			let desRoles = getDeservedRoles(pf.nukes, pf.kd, pf.lvl, pf.challenge);
-
-			const notDesRoles = allRolesList()
-				.filter((r) => !desRoles.includes(r))
-				.map((r) => msg.guild.roles.cache.get(r));
-
-			user.roles.remove(notDesRoles).catch(console.error);
-
-			desRoles = desRoles.map((r) => msg.guild.roles.cache.get(r));
-
-			setTimeout(function () {
-				user.roles.add(desRoles).catch(console.error);
-
-				msg.reply(embed({ title: ':white_check_mark: Your roles have been updated' }));
-			}, 500);
-		} catch (e) {
-			console.error('e', e);
-			bot.users.cache
-				.find((user) => user.id === process.env.DEVID)
-				.send(
-					embed({
-						title: 'roles error',
-						desc: `pf: ${args.join(' ')}\nBy: <@${msg.author.id}>\nIn: <#${
-							msg.channel.id
-						}>`,
-					})
-				);
-			msg.reply(embed({ title: ':x: Unable to get profile' }));
 		}
 	},
 };

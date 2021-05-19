@@ -18,7 +18,7 @@ module.exports = {
 				process.env.PREFIX + '.stats [War number]',
 				process.env.PREFIX + '.stats <username> [War number]',
 				process.env.PREFIX + '.hist <username>',
-				process.env.PREFIX + '.post <Post data>',
+				// process.env.PREFIX + '.post <Post data>',
 			];
 			fields.push({
 				name: 'Clan War Commands',
@@ -31,12 +31,13 @@ module.exports = {
 			const mCommands = [
 				process.env.PREFIX + '.pf [username]',
 				process.env.PREFIX + '.mastery [username]',
+				process.env.PREFIX + '.roles',
 			];
 			fields.push({
 				name: 'Member Commands',
 				value: `>>> \`\`\`css\n${mCommands.join('\n')} \`\`\`
                 Linked account required to use command with no \`[username]\`
-                Ask <@${process.env.DEVID}> for account linking`,
+                Ask <@${process.env.DEVID}> or <@${process.env.DEV2ID}> for account linking`,
 				inline: false,
 			});
 		}

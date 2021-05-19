@@ -29,7 +29,7 @@ module.exports = {
 							process.env.PREFIX +
 							`.pf \`[username]\` 
                             Linked account required to use command with no \`[username]\`
-                            Ask <@${process.env.DEVID}> for account linking`,
+                            Ask <@${process.env.DEVID}> or <@${process.env.DEV2ID}> for account linking`,
 					})
 				);
 			}
