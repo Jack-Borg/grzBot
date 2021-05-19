@@ -19,7 +19,8 @@ module.exports = {
 			return;
 
 		let arg = args.join(' ');
-		if (args.length == 0) arg = msg.author.id;
+		if (msg.mentions.members.first()) arg = msg.mentions.members.first().id;
+		else if (args.length == 0) arg = msg.author.id;
 
 		if (isDiscordId(arg)) {
 			const player = await getSoldierByDiscord(arg);
@@ -27,7 +28,9 @@ module.exports = {
 				return msg.channel.send(
 					embed({
 						title: ':x: Profile not found',
-						desc: `grz.mastery \`[Player]\`
+						desc:
+							process.env.PREFIX +
+							`.mastery \`<Player>\` 
                         Linked account required to use command with no \`[Player]\`
                         Ask <@${process.env.DEVID}> for account linking`,
 					})

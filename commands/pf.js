@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
-const { embed, msToDHM, numberFormat } = require('../utils/utils');
+const { embed, msToDHM, numberFormat, isDiscordId } = require('../utils/utils');
+const { getSoldierByDiscord } = require('../utils/dao');
 const table = require('table');
 const profile = require('../utils/classes/profile');
 
@@ -14,43 +15,55 @@ module.exports = {
 		)
 			return;
 
-		if (args.length == 0) {
-			return msg.channel.send(
-				embed({
-					title: ':x: Missing arguments',
-					desc: process.env.PREFIX + `.pf \`<Player>\` `,
-				})
-			);
-		}
+		let arg = args.join(' ');
+		if (msg.mentions.members.first()) arg = msg.mentions.members.first().id;
+		else if (args.length == 0) arg = msg.author.id;
 
-		try {
-			await socket.connected();
-			const data = await socket.profile(args.join(' '));
-			const pf = new profile(data);
-
-			const TableData = newCreateTable(pf);
-			const TableConfig = {
-				border: table.getBorderCharacters(`ramac`),
-			};
-
-			const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
-			msg.reply(embed({ title: pf.name, desc }));
-		} catch (e) {
-			console.error('e', e);
-			bot.users.cache
-				.find((user) => user.id === process.env.DEVID)
-				.send(
+		if (isDiscordId(arg)) {
+			const player = await getSoldierByDiscord(arg);
+			if (!player) {
+				return msg.channel.send(
 					embed({
-						title: 'pf error',
-						desc: `pf: ${args.join(' ')}\nBy: <@${msg.author.id}>\nIn: <#${
-							msg.channel.id
-						}>`,
+						title: ':x: Profile not found',
+						desc:
+							process.env.PREFIX +
+							`.pf \`[Player]\` 
+                            Linked account required to use command with no \`[Player]\`
+                            Ask <@${process.env.DEVID}> for account linking`,
 					})
 				);
-			msg.reply(embed({ title: ':x: Unable to get profile' }));
-		}
+			}
+			pf(player.name, msg, bot, socket);
+		} else pf(arg, msg, bot, socket);
 	},
 };
+
+async function pf(name, msg, bot, socket) {
+	try {
+		await socket.connected();
+		const data = await socket.profile(name);
+		const pf = new profile(data);
+
+		const TableData = newCreateTable(pf);
+		const TableConfig = {
+			border: table.getBorderCharacters(`ramac`),
+		};
+
+		const desc = `\`\`\`css\n${table.table(TableData, TableConfig)}\`\`\``;
+		msg.reply(embed({ title: pf.name, desc }));
+	} catch (e) {
+		console.error('e', e);
+		bot.users.cache
+			.find((user) => user.id === process.env.DEVID)
+			.send(
+				embed({
+					title: 'pf error',
+					desc: `pf: ${name}\nBy: <@${msg.author.id}>\nIn: <#${msg.channel.id}>`,
+				})
+			);
+		msg.reply(embed({ title: ':x: Unable to get profile' }));
+	}
+}
 
 function newCreateTable(pf) {
 	return [
