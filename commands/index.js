@@ -12,6 +12,7 @@ module.exports = {
 	kpm: require('./kpm'),
 	Wars: require('./wars'),
 	Contract: require('./contract'),
+	Link: require('./link'),
 	// Apply: require('./apply'),
 	// Archive: require('./archive'),
 	// Top: require('./top'),

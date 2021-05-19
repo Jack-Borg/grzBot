@@ -9,6 +9,7 @@ module.exports = {
 	async execute(msg, args, bot, socket) {
 		if (msg.author.id !== process.env.DEVID) return;
 
+		console.log(msg.mentions.users.first().id);
 		// try {
 		// 	await socket.connected();
 		// 	// const cw = await socket.cw();

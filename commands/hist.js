@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getSoldier } = require('../utils/dao');
+const { getSoldierByName } = require('../utils/dao');
 const table = require('table');
 const { numberFormat, msToDHM, embed } = require('../utils/utils');
 
@@ -14,7 +14,7 @@ module.exports = {
 		)
 			return;
 
-		getSoldier(args[0]).then((s) => {
+		getSoldierByName(args[0]).then((s) => {
 			if (!s) return msg.channel.send(embed({ title: args[0] + ' not found' }));
 
 			msg.channel.send(soldierEmbed(s));

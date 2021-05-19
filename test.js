@@ -38,10 +38,11 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const fs = require('fs');
-const dao = require('./utils/dao');
+// const fs = require('fs');
+// const dao = require('./utils/dao');
 
-// dao.postReport([{ name: 'asdasdasd', kills: 123, timePlayed: 346234 }]);
+// dao.linkAccount(134785189128830977, 'jack_borg');
+// dao.getSoldierByDiscord(134785189128830977).then((s) => console.log(s));
 
 // dao.delete();
 
@@ -78,7 +79,7 @@ const dao = require('./utils/dao');
 // dao.postAll(Object.values(res));
 // });
 
-fs.readFile('./tmp.json', 'utf8', (err, data) => {
-	if (err) throw err;
-	dao.postAll(JSON.parse(data));
-});
+// fs.readFile('./tmp.json', 'utf8', (err, data) => {
+// 	if (err) throw err;
+// 	dao.postAll(JSON.parse(data));
+// });

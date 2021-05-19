@@ -133,7 +133,7 @@ module.exports = {
 	// 		);
 	// 	}).catch((err) => console.error(`Failed to find document: ${err}`));
 	// },
-	getSoldier: async function (name) {
+	getSoldierByName: async function (name) {
 		return new Promise((resolve, reject) => {
 			MongoClient.connect(
 				url,
@@ -147,6 +147,27 @@ module.exports = {
 
 					dbo.collection(colName)
 						.findOne({ name: { $regex: new RegExp(name, 'i') } })
+						.then((s) => {
+							resolve(s);
+						});
+				}
+			);
+		}).catch((err) => console.error(`Failed to find document: ${err}`));
+	},
+	getSoldierByDiscord: async function (id) {
+		return new Promise((resolve, reject) => {
+			MongoClient.connect(
+				url,
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				},
+				function (err, db) {
+					if (err) throw err;
+					var dbo = db.db('Krunker');
+
+					dbo.collection(colName)
+						.findOne({ discordID: id })
 						.then((s) => {
 							resolve(s);
 						});
@@ -233,12 +254,34 @@ module.exports = {
 		);
 		return;
 	},
+	linkAccount: async function (discId, name) {
+		await MongoClient.connect(
+			url,
+			{
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			},
+			async function (err, db) {
+				if (err) throw err;
+				var dbo = db.db('Krunker');
 
-	delete: async function () {
-		MongoClient.connect(url, function (err, db) {
-			if (err) throw err;
-			var dbo = db.db('Krunker');
-			dbo.collection('test').deleteMany({});
-		});
+				const filter = { name: { $regex: new RegExp(name, 'i') } };
+				const update = {
+					$set: {
+						discordID: discId,
+					},
+				};
+				const options = { upsert: true };
+				dbo.collection(colName).updateOne(filter, update, options);
+			}
+		);
+		return;
 	},
+	// delete: async function () {
+	// 	MongoClient.connect(url, function (err, db) {
+	// 		if (err) throw err;
+	// 		var dbo = db.db('Krunker');
+	// 		dbo.collection('test').deleteMany({});
+	// 	});
+	// },
 };
