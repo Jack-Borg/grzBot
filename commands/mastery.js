@@ -18,11 +18,11 @@ module.exports = {
 		)
 			return;
 
-		let arg = args.join('');
+		let arg = args.join(' ');
 		if (args.length == 0) arg = msg.author.id;
 
 		if (isDiscordId(arg)) {
-			const name = (await getSoldierByDiscord(msg.author.id)).name;
+			const name = (await getSoldierByDiscord(arg)).name;
 			if (!name) {
 				return msg.channel.send(
 					embed({
