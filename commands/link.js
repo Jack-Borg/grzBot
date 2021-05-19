@@ -7,7 +7,7 @@ module.exports = {
 	name: process.env.PREFIX + '.link',
 	description: 'linking cmd',
 	async execute(msg, args, bot, socket) {
-		if (msg.author.id !== process.env.DEVID) return;
+		if (msg.author.id !== process.env.DEVID && msg.author.id !== process.env.DEV2ID) return;
 
 		if (args.length != 2) return msg.channel.send(embed({ title: 'Missing argument' }));
 
