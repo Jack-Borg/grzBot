@@ -16,8 +16,8 @@ module.exports = {
 		) {
 			const cwf = [
 				process.env.PREFIX + '.stats [War number]',
-				process.env.PREFIX + '.stats <kr-username> [War number]',
-				process.env.PREFIX + '.hist <kr-username>',
+				process.env.PREFIX + '.stats <username> [War number]',
+				process.env.PREFIX + '.hist <username>',
 				process.env.PREFIX + '.post <Post data>',
 			];
 			fields.push({
@@ -29,12 +29,14 @@ module.exports = {
 
 		if (msg.member.roles.cache.has(process.env.MEMBERROLE)) {
 			const mCommands = [
-				process.env.PREFIX + '.pf <kr-username>',
-				process.env.PREFIX + '.mastery <kr-username>',
+				process.env.PREFIX + '.pf [username]',
+				process.env.PREFIX + '.mastery [username]',
 			];
 			fields.push({
 				name: 'Member Commands',
-				value: `>>> \`\`\`css\n${mCommands.join('\n')} \`\`\``,
+				value: `>>> \`\`\`css\n${mCommands.join('\n')} \`\`\`
+                Linked account required to use command with no \`[username]\`
+                Ask <@${process.env.DEVID}> for account linking`,
 				inline: false,
 			});
 		}

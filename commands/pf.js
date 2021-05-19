@@ -27,8 +27,8 @@ module.exports = {
 						title: ':x: Profile not found',
 						desc:
 							process.env.PREFIX +
-							`.pf \`[Player]\` 
-                            Linked account required to use command with no \`[Player]\`
+							`.pf \`[username]\` 
+                            Linked account required to use command with no \`[username]\`
                             Ask <@${process.env.DEVID}> for account linking`,
 					})
 				);
