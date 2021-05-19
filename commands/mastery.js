@@ -22,18 +22,18 @@ module.exports = {
 		if (args.length == 0) arg = msg.author.id;
 
 		if (isDiscordId(arg)) {
-			const name = (await getSoldierByDiscord(arg)).name;
-			if (!name) {
+			const player = await getSoldierByDiscord(arg);
+			if (!player) {
 				return msg.channel.send(
 					embed({
-						title: ':x: Missing arguments',
+						title: ':x: Profile not found',
 						desc: `grz.mastery \`[Player]\`
                         Linked account required to use command with no \`[Player]\`
-                        or ask <@${process.env.DEVID}> for account linking`,
+                        Ask <@${process.env.DEVID}> for account linking`,
 					})
 				);
 			}
-			mast(name, msg, bot, socket);
+			mast(player.name, msg, bot, socket);
 		} else mast(arg, msg, bot, socket);
 	},
 };
