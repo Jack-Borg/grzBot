@@ -32,7 +32,7 @@ module.exports = {
 							process.env.PREFIX +
 							`.mastery \`[username]\` 
                         Linked account required to use command with no \`[username]\`
-                        Ask <@${process.env.DEVID}> for account linking`,
+                        Ask <@${process.env.DEVID}> or <@${process.env.DEV2ID}> for account linking`,
 					})
 				);
 			}
@@ -66,7 +66,11 @@ async function mast(name, msg, bot, socket) {
 			otherMastery('[Nuke Tamer]', pf.nukes, 1000, '1k'),
 			otherMastery('[Shuriken]', pf.bullseyes, 10000, '10k'),
 			otherMastery('[Vandal]', pf.sprays, 50000, '50k'),
-			['[High Roller]', doneOrFormat(pf.kr / 1000000), numberFormat(pf.kr / 1000) + 'k/1m'],
+			[
+				'[High Roller]',
+				doneOrFormat(pf.kr / 1000000),
+				pf.kr > 1000000 ? 'Done' : numberFormat(pf.kr / 1000) + 'k/1m',
+			],
 			otherMastery('[Killa]', pf.kills, 50000, '50k'),
 			['[KPD Mastery]', 'Coming soon', 'Coming soon'],
 		];
@@ -117,8 +121,9 @@ function classMastery(name, score, tar) {
 	const percent = doneOrFormat(score / tar);
 	const lvl = Math.floor(0.03 * Math.sqrt(score)) + 1;
 	const tarLvl = Math.floor(0.03 * Math.sqrt(tar)) + 1;
+	const lvlTxt = lvl > tarLvl ? 'Done' : lvl + '/' + tarLvl;
 
-	return [name, percent, lvl + '/' + tarLvl];
+	return [name, percent, lvlTxt];
 }
 
 function otherMastery(name, cur, tar, formattedTar) {
