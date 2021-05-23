@@ -52,29 +52,29 @@ module.exports = {
 	// 		);
 	// 	});
 	// },
-	// getAllWarReport: async function () {
-	// 	return new Promise((resolve, reject) => {
-	// 		MongoClient.connect(
-	// 			url,
-	// 			{
-	// 				useNewUrlParser: true,
-	// 				useUnifiedTopology: true,
-	// 			},
-	// 			function (err, db) {
-	// 				if (err) throw err;
-	// 				var dbo = db.db('Krunker');
+	getAllSoldiers: async function () {
+		return new Promise((resolve, reject) => {
+			MongoClient.connect(
+				url,
+				{
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				},
+				function (err, db) {
+					if (err) throw err;
+					var dbo = db.db('Krunker');
 
-	// 				dbo.collection(colName)
-	// 					.find()
-	// 					.toArray((err, result) => {
-	// 						if (err) reject(err);
-	// 						resolve(result);
-	// 						db.close();
-	// 					});
-	// 			}
-	// 		);
-	// 	});
-	// },
+					dbo.collection(colName)
+						.find()
+						.toArray((err, result) => {
+							if (err) reject(err);
+							resolve(result);
+							db.close();
+						});
+				}
+			);
+		});
+	},
 	// getSoldierReport: async function (name, warNumber = process.env.CURRENTWAR) {
 	// 	return new Promise((resolve, reject) => {
 	// 		MongoClient.connect(
@@ -265,7 +265,7 @@ module.exports = {
 				if (err) throw err;
 				var dbo = db.db('Krunker');
 
-				const filter = { name: { $regex: new RegExp(name, 'i') } };
+				const filter = { name: name };
 				const update = {
 					$set: {
 						discordID: discId,
