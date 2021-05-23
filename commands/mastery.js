@@ -1,7 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const { embed, numberFormat, isDiscordId } = require('../utils/utils');
-const { getSoldierByDiscord } = require('../utils/dao');
+const { getPlayerByDiscord } = require('../utils/dao');
 const table = require('table');
 const profile = require('../utils/classes/profile');
 
@@ -23,7 +23,7 @@ module.exports = {
 		else if (args.length == 0) arg = msg.author.id;
 
 		if (isDiscordId(arg)) {
-			const player = await getSoldierByDiscord(arg);
+			const player = await getPlayerByDiscord(arg);
 			if (!player) {
 				return msg.channel.send(
 					embed({

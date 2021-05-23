@@ -2,13 +2,15 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const { embed, numberFormat, minToHM } = require('../utils/utils');
 const { table } = require('table');
+const { deleteAll } = require('../utils/dao')
 
 module.exports = {
 	name: process.env.PREFIX + '.test',
 	description: 'testing cmd',
 	async execute(msg, args, bot, socket) {
 		if (msg.author.id !== process.env.DEVID) return;
-
+		console.log("Debug")
+		//deleteAll()
 		// try {
 		// 	await socket.connected();
 		// 	// const cw = await socket.cw();

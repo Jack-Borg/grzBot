@@ -133,7 +133,7 @@ module.exports = {
 	// 		);
 	// 	}).catch((err) => console.error(`Failed to find document: ${err}`));
 	// },
-	getSoldierByName: async function (name) {
+	getPlayerByName: async function (name) {
 		return new Promise((resolve, reject) => {
 			MongoClient.connect(
 				url,
@@ -154,7 +154,7 @@ module.exports = {
 			);
 		}).catch((err) => console.error(`Failed to find document: ${err}`));
 	},
-	getSoldierByDiscord: async function (id) {
+	getPlayerByDiscord: async function (id) {
 		return new Promise((resolve, reject) => {
 			MongoClient.connect(
 				url,
@@ -265,7 +265,7 @@ module.exports = {
 				if (err) throw err;
 				var dbo = db.db('Krunker');
 
-				const filter = { name: { $regex: new RegExp(name, 'i') } };
+				const filter = { name: name };
 				const update = {
 					$set: {
 						discordID: discId,
@@ -277,11 +277,11 @@ module.exports = {
 		);
 		return;
 	},
-	// delete: async function () {
-	// 	MongoClient.connect(url, function (err, db) {
-	// 		if (err) throw err;
-	// 		var dbo = db.db('Krunker');
-	// 		dbo.collection('test').deleteMany({});
-	// 	});
-	// },
+	deleteAll: async function () {
+	 	MongoClient.connect(url, function (err, db) {
+	 		if (err) throw err;
+			var dbo = db.db('Krunker');
+	 		dbo.collection(colName).deleteMany({});
+	 	});
+	},
 };

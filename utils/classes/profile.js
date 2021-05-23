@@ -47,6 +47,7 @@ module.exports = class {
 		this.shots = pfStats['s'];
 		this.hits = pfStats['h'];
 		this.kr_packages = pfStats['ad'];
+		this.flag = pfStats['flg']
 
 		this.kd = this.kills / this.deaths;
 		this.kpg = this.kills / this.games;

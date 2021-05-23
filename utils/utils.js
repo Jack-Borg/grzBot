@@ -19,10 +19,16 @@ module.exports = {
 
 		return `${d > 0 ? d + 'd' : ''} ${h}h ${m}m`;
 	},
+	getRandomInt: function (min, max) {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min +1)) + min;
+	},
 	embed: function ({ title, desc, fields, stamp = false }) {
 		const embed = new Discord.MessageEmbed().setColor('#ffc800');
 
-		if (title) embed.setTitle(title);
+		if (title) embed.setTitle(title);	
+		
 		if (desc) embed.setDescription(desc);
 
 		if (fields) {
@@ -38,4 +44,7 @@ module.exports = {
 	isDiscordId: function (id) {
 		return !isNaN(id) && id.length == 18;
 	},
+	getEmoji: function (bot ,emojiName) {
+		return emojiID = bot.emojis.cache.find((emoji) => emoji.name === emojiName);
+	}
 };

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getSoldierByName, getWar } = require('../utils/dao');
+const { getPlayerByName, getWar } = require('../utils/dao');
 const { numberFormat, msToDHM, embed } = require('../utils/utils');
 
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
 
 		if (isNaN(args[0])) {
 			if (!args[1]) args[1] = process.env.CURRENTWAR;
-			getSoldierByName(args[0]).then((soldier) => {
+			getPlayerByName(args[0]).then((soldier) => {
 				if (!soldier)
 					return msg.channel.send(
 						embed({ title: args[0] + ' not found in war ' + args[1], stamp: false })

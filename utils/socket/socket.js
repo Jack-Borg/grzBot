@@ -113,10 +113,10 @@ module.exports = {
 			console.log('Requesting Profile from: ', name);
 			var interval = setInterval(function () {
 				if (dataPackage[2] === name) {
-					clearInterval(interval);
 					resolve(dataPackage);
+					clearInterval(interval);
 				}
-			}, 200);
+			}, 500);
 			setTimeout(() => {
 				reject(new Error('Profile Timeout'));
 				clearInterval(interval);
